@@ -5,16 +5,19 @@
 { config, pkgs, ... }:
 
 {
+  imports =
+    [ # Include the results of the hardware scan.
+      /etc/nixos/hardware-configuration.nix
+      ./user/chris.nix
+    ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265".device = "/dev/disk/by-uuid/0d883292-d0a9-470e-bbc1-e12030fa0265";
+  networking.hostName = "void-carbonx1"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -73,15 +76,12 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  # Enable Bluetooth 
+  hardware.bluetooth.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.chris = {
-    isNormalUser = true;
-    description = "Christian Elberfeld";
-    extraGroups = [ "networkmanager" "wheel" ];
-   };
+  # Enable touchpad support (enabled default in most desktopManager).
+  services.xserver.libinput.enable = true;
+
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -93,7 +93,13 @@
   #  wget
     nano
     firefox
+    psmisc
+
     git
+    vscodium 
+
+    gnupg
+    yubikey-personalization
    ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -115,4 +121,25 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "23.05"; # Did you read the comment?
+
+  #environment.systemPackages = with pkgs; [
+  #  gnupg
+  #  yubikey-personalization
+  #];
+
+  services.udev.packages = with pkgs; [ 
+    yubikey-personalization 
+  ];
+
+  programs.ssh.startAgent = false;
+  programs.gnupg.agent.enable = true;
+  programs.gnupg.agent.enableSSHSupport = true;
+  services.pcscd.enable = true;
 }
