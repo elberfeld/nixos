@@ -6,6 +6,7 @@
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
       ./shared/base.nix
+      ./shared/powermgmt.nix
       ./shared/yubikey.nix
       ./user/chris.nix
     ];
@@ -68,6 +69,7 @@
   environment.systemPackages = with pkgs; [
 
     firefox
+    gparted
     vscodium 
 
   ];
