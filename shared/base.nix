@@ -29,17 +29,44 @@
   # Passwordless sudo for group wheel  
   security.sudo.wheelNeedsPassword = false;
 
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  programs.mtr.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-
+    btop
     curl
     git
+    iftop
+    mtr
     nano
+    powertop
     psmisc
+    tmux
     wget
-
   ];
 
+  # Install Fonts Fonts
+  fonts.fonts = with pkgs; [
+    fira-code
+    fira
+    cooper-hewitt
+    ibm-plex
+    jetbrains-mono
+    iosevka
+    spleen
+    fira-code-symbols
+    powerline-fonts
+    nerdfonts
+  ];
+
+  # Automatic upgrades 
+  # https://nixos.wiki/wiki/Automatic_system_upgrades
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/tasks/auto-upgrade.nix
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.dates = "04:00";
+  system.autoUpgrade.allowReboot = false;
 
 }
