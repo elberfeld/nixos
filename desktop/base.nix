@@ -61,6 +61,7 @@
     firefox
     flatpak
     gparted
+    vlc
 
   ];
 
