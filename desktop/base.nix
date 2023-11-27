@@ -38,6 +38,9 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true; 
 
+  # Enable flatpak
+  services.flatpak.enable = true;
+
   # Enable dconf
   programs.dconf.enable = true;
 
@@ -56,6 +59,7 @@
   environment.systemPackages = with pkgs; [
 
     firefox
+    flatpak
     gparted
 
   ];
