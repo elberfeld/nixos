@@ -2,6 +2,9 @@
 
 {
 
+  # Enable networking with NetworkManager
+  networking.networkmanager.enable = true;
+  
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
@@ -49,7 +52,7 @@
   ];
 
   # Install Fonts Fonts
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     fira-code
     fira
     cooper-hewitt
