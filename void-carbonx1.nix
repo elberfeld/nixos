@@ -27,6 +27,10 @@
   # Login Manager 
   services.xserver.displayManager.sddm.enable = true;
 
+  # Fingerprint Sensor 
+  services.fprintd.enable = true;
+  #services.fprintd.tod.enable = true;
+
   # FCC Unlock for integrated LTE Modem
   # curently not working, see
   # https://modemmanager.org/docs/modemmanager/fcc-unlock/#integration-with-third-party-fcc-unlock-tools
