@@ -27,9 +27,18 @@
   # Login Manager 
   services.xserver.displayManager.sddm.enable = true;
 
+  # Arch Wiki with Hardware Infos 
+  # https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
+
   # Fingerprint Sensor 
   services.fprintd.enable = true;
-  #services.fprintd.tod.enable = true;
+
+  # Camera
+  # currently unstable, see https://github.com/NixOS/nixpkgs/issues/225743
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep";
+  };
 
   # FCC Unlock for integrated LTE Modem
   # curently not working, see
