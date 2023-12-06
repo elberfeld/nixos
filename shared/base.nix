@@ -45,9 +45,11 @@
     iftop
     mtr
     nano
+    pciutils
     powertop
     psmisc
     tmux
+    usbutils
     wget
   ];
 
@@ -69,7 +71,13 @@
   # https://nixos.wiki/wiki/Automatic_system_upgrades
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/tasks/auto-upgrade.nix
   system.autoUpgrade.enable = true;
-  system.autoUpgrade.dates = "04:00";
+  system.autoUpgrade.dates = "daily";
   system.autoUpgrade.allowReboot = false;
+
+  # Garbage collection 
+  nix.settings.auto-optimise-store = true;
+  nix.gc.automatic = true;
+  nix.gc.dates = "daily";
+  nix.gc.options = "--delete-older-than 7d";
 
 }

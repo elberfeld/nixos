@@ -17,6 +17,8 @@
     libsForQt5.discover
     libsForQt5.dolphin
     libsForQt5.dolphin-plugins
+    libsForQt5.kamoso
+
   ];
 
 }
