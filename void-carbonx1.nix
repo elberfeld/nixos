@@ -49,6 +49,12 @@
   #   { id = "1199:9079"; path = "${pkgs.modemmanager}/share/ModemManager/fcc-unlock.available.d/1199:9079"; }
   # ];
 
+  # exclude WWAN from Powersave 
+  # see https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
+  services.tlp.settings = {
+    RUNTIME_PM_DENYLIST="08:00.0";
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
