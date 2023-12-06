@@ -58,6 +58,18 @@
     RUNTIME_PM_DENYLIST="08:00.0";
   };
 
+  #fonts.fontconfig.dpi = 135;
+  #i18n.consoleFont = "ter-132b";
+  #i18n.consolePackages = with pkgs; [ terminus_font ];
+  #boot.earlyVconsoleSetup = true;  
+
+  # set up console font for boot 
+  #console = {
+  #  earlySetup = true;
+  #  font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
+  #  packages = with pkgs; [ terminus_font ];
+  #};
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
