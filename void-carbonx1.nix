@@ -27,6 +27,9 @@
   # Login Manager 
   services.xserver.displayManager.sddm.enable = true;
 
+  # Lenovo Device Info
+  # https://psref.lenovo.com/Detail/ThinkPad_X1_Carbon_Gen_10?M=21CB00AEMB
+  
   # Arch Wiki with Hardware Infos 
   # https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
 
