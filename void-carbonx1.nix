@@ -8,6 +8,7 @@
       ./desktop/base.nix
       ./desktop/kde.nix
       ./shared/base.nix
+      ./shared/libvirt-kvm.nix
       ./shared/powermgmt.nix
       ./shared/yubikey.nix
       ./user/chris.nix
