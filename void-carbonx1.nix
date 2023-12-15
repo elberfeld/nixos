@@ -105,10 +105,13 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
+  # vscode: to enabel sudo commands in vscode terminal, run: code --no-sandbox
+
   environment.systemPackages = with pkgs; [
 
     direnv
-    vscodium 
+    vscode 
 
   ];
 
