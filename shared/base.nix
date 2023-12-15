@@ -57,16 +57,18 @@
   # Install Fonts Fonts
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
-    fira-code
+
+    cooper-hewitt    
     fira
-    cooper-hewitt
-    ibm-plex
-    jetbrains-mono
-    iosevka
-    spleen
+    fira-code
     fira-code-symbols
-    powerline-fonts
+    hack-font    
+    ibm-plex
+    iosevka
+    jetbrains-mono
     nerdfonts
+    powerline-fonts
+    spleen
   ];
 
   # Automatic upgrades 
