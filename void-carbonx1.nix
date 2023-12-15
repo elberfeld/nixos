@@ -7,6 +7,7 @@
       /etc/nixos/hardware-configuration.nix
       ./desktop/base.nix
       ./desktop/kde.nix
+      ./desktop/hyprland.nix
       ./shared/base.nix
       ./shared/libvirt-kvm.nix
       ./shared/powermgmt.nix
