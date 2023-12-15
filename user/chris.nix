@@ -6,7 +6,7 @@
   users.users.chris = {
     isNormalUser = true;
     description = "Christian Elberfeld";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
   };
   
   home-manager.users.chris = { pkgs, ... }: {

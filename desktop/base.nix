@@ -34,15 +34,19 @@
     #media-session.enable = true;
   };
 
-  # Enable Bluetooth 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true; 
 
   # Enable flatpak
   services.flatpak.enable = true;
+  services.packagekit.enable = true;
 
   # Enable dconf
   programs.dconf.enable = true;
+
+  # set environment variables 
+  environment.sessionVariables = {
+    # Hint electron Apps to use wayland
+    NIXOS_OZONE_WL = "1";
+  };
 
   # Fis Filepickers for Firefox
   # https://wiki.archlinux.org/title/firefox#XDG_Desktop_Portal_integration
@@ -60,7 +64,9 @@
 
     firefox
     flatpak
+    freerdp
     gparted
+    remmina
     vlc
 
   ];

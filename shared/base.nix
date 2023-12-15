@@ -50,10 +50,12 @@
     psmisc
     tmux
     usbutils
+    vim
     wget
   ];
 
   # Install Fonts Fonts
+  fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
     fira-code
     fira
