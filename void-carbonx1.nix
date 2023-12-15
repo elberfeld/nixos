@@ -14,9 +14,31 @@
     ];
 
   # Bootloader Settimgs
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.consoleMode = "1";
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Use Systemd-Boot
+  boot.loader.systemd-boot = { 
+    enable = true;
+    editor = false;
+#    consoleMode = "1";
+    consoleMode = "max";
+  };
+
+  # Use Grub
+  #boot.loader.grub = {
+  #  enable = true;
+  #  useOSProber = true;
+  #  device = "nodev";
+  #  efiSupport = true;
+  #  gfxpayloadEfi = "keep";
+  #  gfxmodeEfi = "1920x1200x32";
+  #  theme = pkgs.sleek-grub-theme;
+  #};
+
+  # Graphical boot scren 
+  #boot.initrd.systemd.enable = true;
+  #boot.plymouth.enable = true;
+  #boot.plymouth.theme = "breeze";
 
   # Luks devices
   boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265".device = "/dev/disk/by-uuid/0d883292-d0a9-470e-bbc1-e12030fa0265";
@@ -83,6 +105,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
+    direnv
     vscodium 
 
   ];
