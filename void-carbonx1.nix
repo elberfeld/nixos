@@ -24,8 +24,6 @@
   # Define your hostname
   networking.hostName = "void-carbonx1"; 
 
-  # Login Manager 
-  services.xserver.displayManager.sddm.enable = true;
 
   # Lenovo Device Info
   # https://psref.lenovo.com/Detail/ThinkPad_X1_Carbon_Gen_10?M=21CB00AEMB
