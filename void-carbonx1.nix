@@ -33,6 +33,16 @@
   # Arch Wiki with Hardware Infos 
   # https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
 
+  # Enable Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true; 
+
+  # Enable OpenGL 
+  hardware.opengl.enable = true;
+
+  # Enable Touchpad Support inX11/Wayland
+  services.xserver.libinput.enable = true;
+
   # Fingerprint Sensor 
   services.fprintd.enable = true;
 
