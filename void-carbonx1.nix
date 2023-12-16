@@ -111,7 +111,16 @@
   environment.systemPackages = with pkgs; [
 
     direnv
+    hamsket
+    keepassxc
+    microsoft-edge
+    neovim
+    nextcloud-client
+    signal-desktop
+    teams-for-linux
+    ungoogled-chromium
     vscode 
+    yubikey-manager-qt
 
   ];
 
