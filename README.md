@@ -16,20 +16,6 @@ nix-channel --update
 The folowing extensions in configuration.nix are needed 
 
 ```
-  environment.systemPackages = with pkgs; [
-    git
-    gnupg
-    yubikey-personalization
-   ];
-
-  services.udev.packages = with pkgs; [ 
-    yubikey-personalization 
-  ];
-
-  programs.ssh.startAgent = false;
-  programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.enableSSHSupport = true;
-  services.pcscd.enable = true;
-
+services.yubikey-agent.enable = true;
 ```
 
