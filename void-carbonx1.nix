@@ -8,6 +8,7 @@
       ./desktop/base.nix
       ./desktop/kde.nix
       ./desktop/hyprland.nix
+      ./desktop/sddm.nix
       ./shared/base.nix
       ./shared/libvirt-kvm.nix
       ./shared/powermgmt.nix
@@ -121,6 +122,7 @@
     ungoogled-chromium
     vscode 
     yubikey-manager-qt
+    zettlr
 
   ];
 
