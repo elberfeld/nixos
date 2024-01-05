@@ -2,6 +2,11 @@
 
 Clone this Repo and replace /etc/nixos/configuration.nix with a symlink to the configuration in this repo.
 
+```
+git clone git@github.com:elberfeld/nixos.git
+ln -s /home/{username}/{git path}/{configfile}.nix /etc/nixos/configuration.nix 
+```
+
 ## Setup Nix-Chanels
 
 ```

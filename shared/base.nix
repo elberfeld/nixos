@@ -4,6 +4,13 @@
 
   # Enable networking with NetworkManager
   networking.networkmanager.enable = true;
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+  networking.firewall.enable = true;
   
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -66,8 +73,13 @@
     ibm-plex
     iosevka
     jetbrains-mono
+    liberation_ttf
     nerdfonts
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
     powerline-fonts
+    proggyfonts
     spleen
   ];
 
