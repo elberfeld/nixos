@@ -47,15 +47,21 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     btop
+    carapace
     curl
     git
+    htop
     iftop
+    mosh
     mtr
     nano
+    nushell
     pciutils
     powertop
     psmisc
+    starship
     tmux
+    tree
     usbutils
     vim
     wget
