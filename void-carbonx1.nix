@@ -111,6 +111,8 @@
 
   environment.systemPackages = with pkgs; [
 
+    ansible
+    ansible-lint
     direnv
     hamsket
     keepassxc
