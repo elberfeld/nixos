@@ -61,6 +61,7 @@
     freerdp
     gparted
     remmina
+    thunderbird
     vlc
 
   ];
