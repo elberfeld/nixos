@@ -54,6 +54,7 @@
     iftop
     mosh
     mtr
+    mosh 
     nano
     nushell
     pciutils
