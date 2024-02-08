@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
-{
+let
+  GERMAN = "de_DE.UTF-8/UTF-8";
+  ENGLISH = "en_US.UTF-8/UTF-8";
+in {
 
   # Enable networking with NetworkManager
   networking.networkmanager.enable = true;
@@ -16,18 +19,24 @@
   time.timeZone = "Europe/Berlin";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "de_DE.UTF-8";
-
+  i18n.supportedLocales = [ ENGLISH GERMAN ];
+  i18n.defaultLocale = GERMAN;
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
+    LANG = GERMAN;
+    LC_MESSAGES = GERMAN;
+    LC_IDENTIFICATION = GERMAN;
+    LC_ALL = GERMAN;
+
+    LC_CTYPE = GERMAN;
+    LC_NUMERIC = GERMAN;
+    LC_TIME = GERMAN;
+    LC_COLLATE = GERMAN;
+    LC_NAME = GERMAN;
+    LC_MONETARY = GERMAN;
+    LC_PAPER = GERMAN;
+    LC_ADDRESS = GERMAN;
+    LC_TELEPHONE = GERMAN;
+    LC_MEASUREMENT = GERMAN;
   };
 
   # Configure console keymap
