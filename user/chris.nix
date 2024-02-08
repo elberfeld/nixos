@@ -15,7 +15,7 @@
     initialPassword = "Pass@word1+";
 
     # Set default shell 
-    shell = pkgs.nushell;
+    # shell = pkgs.nushell;
     
     extraGroups = [ 
 
