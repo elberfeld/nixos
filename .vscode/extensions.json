@@ -1,6 +1,9 @@
 {
   "recommendations": [
     "bbenoist.nix",
+    "b4dm4n.nixpkgs-fmt",
+    "jnoortheen.nix-ide",
+    "thenuprojectcontributors.vscode-nushell-lang",
     "oderwat.indent-rainbow"
   ]
 }
