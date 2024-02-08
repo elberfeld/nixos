@@ -11,7 +11,7 @@
   # Configure keymap in X11
   services.xserver = {
     layout = "de";
-    xkbVariant = "";
+    xkb.variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -32,6 +32,12 @@
   # Enable flatpak
   services.flatpak.enable = true;
   services.packagekit.enable = true;
+
+  # Enable XDG Portal
+  xdg.portal.enable = true;
+  xdg.portal.config.common.default = "*";
+  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+
 
   # Enable dconf
   programs.dconf.enable = true;

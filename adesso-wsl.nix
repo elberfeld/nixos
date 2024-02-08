@@ -5,6 +5,7 @@
     # include NixOS-WSL modules
     <nixos-wsl/modules>
     ./shared/base.nix
+    ./desktop/base.nix
     ./user/chris.nix
   ];
 
