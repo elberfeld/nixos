@@ -4,10 +4,7 @@
   imports = [
     # include NixOS-WSL modules
     <nixos-wsl/modules>
-    #<nixpkgs/nixos/modules/profiles/minimal.nix>
-    <nix-ld/modules/nix-ld.nix>
     ./shared/base.nix
-    ./shared/nix-ld-config.nix
     ./user/chris.nix
   ];
 
@@ -17,16 +14,13 @@
   # Define your hostname
   networking.hostName = "adesso-wsl"; 
 
-  # Enable nix-ld-config for vscode in WSL
-  nix-ld-config.enable = true;
-  nix-ld-config.user = "chris";
-
   environment.systemPackages = with pkgs; [
 
     direnv
     neovim
     socat
     thunderbird
+    vscode
 
   ];
 
