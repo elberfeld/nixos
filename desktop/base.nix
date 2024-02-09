@@ -9,9 +9,9 @@
   services.xserver.libinput.enable = true;
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "de";
-    xkb.variant = "";
+    variant = "";
   };
 
   # Enable CUPS to print documents.
