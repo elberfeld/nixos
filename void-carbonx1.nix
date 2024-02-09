@@ -6,6 +6,7 @@
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
       ./desktop/base.nix
+      ./shared/docker.nix
       ./desktop/kde.nix
       ./desktop/hyprland.nix
       ./desktop/sddm.nix

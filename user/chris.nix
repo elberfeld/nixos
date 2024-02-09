@@ -27,6 +27,9 @@
       
       # user can control virtual machines
       "libvirtd"
+
+      # user can use docker
+      "docker"
       
     ];
 
