@@ -18,6 +18,7 @@
 
   environment.systemPackages = with pkgs; [
 
+    ansible
     direnv
     neovim
     socat
