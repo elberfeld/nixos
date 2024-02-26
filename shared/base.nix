@@ -22,21 +22,20 @@ in {
   i18n.supportedLocales = [ ENGLISH GERMAN ];
   i18n.defaultLocale = GERMAN;
   i18n.extraLocaleSettings = {
-    LANG = GERMAN;
-    LC_MESSAGES = GERMAN;
-    LC_IDENTIFICATION = GERMAN;
-    LC_ALL = GERMAN;
 
-    LC_CTYPE = GERMAN;
-    LC_NUMERIC = GERMAN;
-    LC_TIME = GERMAN;
-    LC_COLLATE = GERMAN;
-    LC_NAME = GERMAN;
-    LC_MONETARY = GERMAN;
-    LC_PAPER = GERMAN;
     LC_ADDRESS = GERMAN;
-    LC_TELEPHONE = GERMAN;
+    LC_ALL = GERMAN;
+    LC_CTYPE = GERMAN;
+    LC_COLLATE = GERMAN;
+    LC_IDENTIFICATION = GERMAN;
     LC_MEASUREMENT = GERMAN;
+    LC_MESSAGES = GERMAN;
+    LC_MONETARY = GERMAN;
+    LC_NAME = GERMAN;
+    LC_NUMERIC = GERMAN;
+    LC_PAPER = GERMAN;
+    LC_TELEPHONE = GERMAN;
+    LC_TIME = GERMAN;
   };
 
   # Configure console keymap
