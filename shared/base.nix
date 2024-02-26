@@ -58,6 +58,7 @@ in {
     carapace
     curl
     git
+    glibcLocales
     htop
     iftop
     mosh
