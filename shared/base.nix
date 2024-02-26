@@ -59,6 +59,7 @@ in {
     curl
     git
     glibcLocales
+    glibcLocalesUtf8
     htop
     iftop
     mosh
