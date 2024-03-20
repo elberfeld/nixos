@@ -3,7 +3,7 @@
 {
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.desktopManager.plasma6.enable = true;
+  services.desktopManager.plasma6.enable = true;
   
   # XDG Portal for kde
   xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-kde ];
