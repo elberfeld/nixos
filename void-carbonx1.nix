@@ -8,7 +8,6 @@
       ./desktop/base.nix
       ./shared/docker.nix
       ./desktop/kde.nix
-      ./desktop/hyprland.nix
       ./desktop/sddm.nix
       ./shared/base.nix
       ./shared/libvirt-kvm.nix
