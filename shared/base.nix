@@ -57,6 +57,7 @@ in {
     btop
     carapace
     curl
+    dig
     git
     glibcLocales
     glibcLocalesUtf8

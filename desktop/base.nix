@@ -62,6 +62,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
+    bitwarden-desktop
     firefox
     flatpak
     freerdp
