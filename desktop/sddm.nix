@@ -35,8 +35,10 @@
     };
   };
 
-  environment.systemPackages = let themes = pkgs.callPackage ../nixpkgs/sddm-themes.nix {}; in [ 
-    themes.where-is-my-sddm-theme 
+  environment.systemPackages = with pkgs; [
+
+    where-is-my-sddm-theme
+    
   ];
 
 

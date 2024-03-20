@@ -3,14 +3,13 @@
 {
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.displayManager.defaultSession = "plasmawayland";
+  services.xserver.desktopManager.plasma6.enable = true;
   
   # XDG Portal for kde
   xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-kde ];
 
   # Exclude default Packages 
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
     elisa
     kwalletmanager
     gwenview
@@ -18,17 +17,17 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs.kdePackages; [
 
+    discover
+    dolphin
+    dolphin-plugins
+    #kamoso - 10.03.2024 - Package is broken
     kate
     konsole
     plasma-browser-integration
-
-    libsForQt5.discover
-    libsForQt5.dolphin
-    libsForQt5.dolphin-plugins
-    libsForQt5.kamoso
-    libportal-qt5
+    sddm
+    sddm-kcm 
 
   ];
 
