@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 
@@ -48,9 +48,6 @@
 
   # Define your hostname
   networking.hostName = "void-carbonx1"; 
-
-  # This Device has a hiDpi screen 
-  hardware.video.hidpi.enable = lib.mkDefault true;
 
   # Lenovo Device Info
   # https://psref.lenovo.com/Detail/ThinkPad_X1_Carbon_Gen_10?M=21CB00AEMB
