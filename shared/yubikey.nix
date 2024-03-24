@@ -4,20 +4,24 @@
 
   # Verwendung des SSH-Schlüssels vom Yubikey
   services.yubikey-agent.enable = true;
+  services.pcscd.enable = true;
 
-  # Hierfür ist der gnupg Agent erforderlich 
+  environment.systemPackages = with pkgs; [
+    pinentry
+    pinentry-curses
+    pinentry-gtk2
+    pinentry-qt
+  ];
 
-  # environment.systemPackages = with pkgs; [
-  #   gnupg
-  #   yubikey-personalization
-  # ];
+  # Alternative Konfiguration mit dem GnuPG-Agent 
+  # https://nixos.wiki/wiki/Yubikey
 
-  # services.udev.packages = with pkgs; [ 
-  #   yubikey-personalization 
-  # ];
+  #services.udev.packages = [ pkgs.yubikey-personalization ];
+  #services.pcscd.enable = true;
 
-  # programs.ssh.startAgent = false;
-  # programs.gnupg.agent.enable = true;
-  # programs.gnupg.agent.enableSSHSupport = true;
-  # services.pcscd.enable = true;
+  #programs.gnupg.agent = {
+  #  enable = true;
+  #  enableSSHSupport = true;
+  #};
+
 }
