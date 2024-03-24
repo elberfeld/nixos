@@ -68,8 +68,8 @@
   # Enable Touchpad Support inX11/Wayland
   services.xserver.libinput.enable = true;
 
-  # Fingerprint Sensor 
-  services.fprintd.enable = true;
+  # Fingerprint Sensor - 24.03.2024 Temporary disabled due to build errors
+  # services.fprintd.enable = true;
 
   # Camera
   # currently unstable, causes system freeze after standby/suspend
