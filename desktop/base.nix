@@ -5,6 +5,9 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Display Link Driver - https://nixos.wiki/wiki/Displaylink
+  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
