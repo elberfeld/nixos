@@ -72,6 +72,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  # vscode: to enable sudo commands in vscode terminal, run: code --no-sandbox
   environment.systemPackages = with pkgs; [
 
     bitwarden-desktop
@@ -79,9 +80,17 @@
     flatpak
     freerdp
     gparted
+    hamsket
+    keepassxc
+    nextcloud-client
     remmina
+    signal-desktop
     thunderbird
+    ungoogled-chromium
     vlc
+    vscode 
+    yubikey-manager-qt
+    zettlr
 
   ];
 

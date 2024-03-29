@@ -94,29 +94,6 @@
   #  packages = with pkgs; [ terminus_font ];
   #};
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-
-  # vscode: to enabel sudo commands in vscode terminal, run: code --no-sandbox
-
-  environment.systemPackages = with pkgs; [
-
-    ansible
-    ansible-lint
-    direnv
-    hamsket
-    keepassxc
-    microsoft-edge
-    neovim
-    nextcloud-client
-    signal-desktop
-    teams-for-linux
-    ungoogled-chromium
-    vscode 
-    yubikey-manager-qt
-    zettlr
-
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

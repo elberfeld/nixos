@@ -61,10 +61,13 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    ansible
+    ansible-lint
     btop
     carapace
     curl
     dig
+    direnv
     git
     glibcLocales
     glibcLocalesUtf8
@@ -74,6 +77,7 @@ in {
     mtr
     mosh 
     nano
+    neovim
     nushell
     pciutils
     powertop

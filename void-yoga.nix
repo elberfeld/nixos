@@ -38,25 +38,6 @@
   # Hostname
   networking.hostName = "void-yoga"; 
 
-  # vscode: to enable sudo commands in vscode terminal, run: code --no-sandbox
-
-  environment.systemPackages = with pkgs; [
-
-    direnv
-    hamsket
-    keepassxc
-    microsoft-edge
-    neovim
-    nextcloud-client
-    remmina
-    signal-desktop
-    teams-for-linux
-    ungoogled-chromium
-    vscode 
-    yubikey-manager-qt
-    zettlr
-
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
