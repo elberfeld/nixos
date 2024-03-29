@@ -1,8 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  GERMAN = "de_DE.UTF-8/UTF-8";
-  ENGLISH = "en_US.UTF-8/UTF-8";
+  GERMAN = "de_DE.UTF-8";
+  GERMAN_UTF8 = "de_DE.UTF-8/UTF-8";
+  ENGLISH = "en_US.UTF-8";
+  ENGLISH_UTF8 = "en_US.UTF-8/UTF-8";
 in {
 
   # Enable networking with NetworkManager
@@ -22,17 +24,19 @@ in {
   time.timeZone = "Europe/Berlin";
 
   # Select internationalisation properties.
-  i18n.supportedLocales = [ ENGLISH GERMAN ];
-  i18n.defaultLocale = GERMAN;
+  i18n.supportedLocales = [ ENGLISH_UTF8 GERMAN_UTF8 ];
+  i18n.defaultLocale = ENGLISH;
   i18n.extraLocaleSettings = {
 
+    LANG = ENGLISH;
+    LC_ALL = ENGLISH;
+    LC_IDENTIFICATION = ENGLISH;
+    LC_MESSAGES = ENGLISH;
+
     LC_ADDRESS = GERMAN;
-    LC_ALL = GERMAN;
     LC_CTYPE = GERMAN;
     LC_COLLATE = GERMAN;
-    LC_IDENTIFICATION = GERMAN;
     LC_MEASUREMENT = GERMAN;
-    LC_MESSAGES = GERMAN;
     LC_MONETARY = GERMAN;
     LC_NAME = GERMAN;
     LC_NUMERIC = GERMAN;
