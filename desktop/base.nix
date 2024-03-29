@@ -1,11 +1,13 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Ugreen Revodok Pro 209
   # Display Link Driver - https://nixos.wiki/wiki/Displaylink
+  # Driver Blob must be prefetched: $ nix-prefetch-url --name displaylink-580.zip https://www.synaptics.com/sites/default/files/exe_files/2023-08/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.8-EXE.zip
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
   # Enable touchpad support (enabled default in most desktopManager).
