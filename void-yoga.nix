@@ -38,16 +38,6 @@
   # Hostname
   networking.hostName = "void-yoga"; 
 
-  # Enable Bluetooth
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true; 
-
-  # Enable OpenGL 
-  hardware.opengl.enable = true;
-
-  # Enable Touchpad Support inX11/Wayland
-  services.xserver.libinput.enable = true;
-
   # vscode: to enable sudo commands in vscode terminal, run: code --no-sandbox
 
   environment.systemPackages = with pkgs; [

@@ -10,14 +10,21 @@
   # Driver Blob must be prefetched: $ nix-prefetch-url --name displaylink-580.zip https://www.synaptics.com/sites/default/files/exe_files/2023-08/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.8-EXE.zip
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "de";
     variant = "";
   };
+
+  # Enable Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true; 
+
+  # Enable OpenGL 
+  hardware.opengl.enable = true;
+
+  # Enable Touchpad Support inX11/Wayland
+  services.xserver.libinput.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

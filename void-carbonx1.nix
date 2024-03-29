@@ -55,26 +55,17 @@
   # Arch Wiki with Hardware Infos 
   # https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
 
-  # Enable Bluetooth
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true; 
-
-  # Enable OpenGL 
-  hardware.opengl.enable = true;
-
-  # Enable Touchpad Support inX11/Wayland
-  services.xserver.libinput.enable = true;
 
   # Fingerprint Sensor - 24.03.2024 Temporary disabled due to build errors
-  # services.fprintd.enable = true;
+  services.fprintd.enable = true;
 
   # Camera
   # currently unstable, causes system freeze after standby/suspend
   # see https://github.com/NixOS/nixpkgs/issues/225743
-  #hardware.ipu6 = {
-  #  enable = true;
-  #  platform = "ipu6ep";
-  #};
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep";
+  };
 
   # FCC Unlock for integrated LTE Modem
   # curently not working, see
