@@ -17,7 +17,7 @@
   # https://store.kde.org/p/1430814
   # Zust: https://github.com/stepanzubkov/sddm-zust/tree/main
   
-  services.xserver.displayManager.sddm = {
+  services.displayManager.sddm = {
     enable = true;
     enableHidpi = true;
     wayland.enable = true;
@@ -29,7 +29,7 @@
   #  [General]
   #  InputMethod=
   #'';
-  services.xserver.displayManager.sddm.settings = {
+  services.displayManager.sddm.settings = {
     General = {
       InputMethod = "";
     };
