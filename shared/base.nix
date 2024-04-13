@@ -69,6 +69,7 @@ in {
     dig
     direnv
     git
+    gitui
     glibcLocales
     glibcLocalesUtf8
     htop
