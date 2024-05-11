@@ -24,7 +24,7 @@
   hardware.opengl.enable = true;
 
   # Enable Touchpad Support inX11/Wayland
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
