@@ -95,7 +95,8 @@ in {
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
 
-    cooper-hewitt    
+    cooper-hewitt
+    corefonts    
     fira
     fira-code
     fira-code-symbols
@@ -111,6 +112,7 @@ in {
     powerline-fonts
     proggyfonts
     spleen
+    vistafonts
   ];
 
   # Automatic upgrades 
