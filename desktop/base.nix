@@ -21,7 +21,7 @@
   hardware.bluetooth.powerOnBoot = true; 
 
   # Enable OpenGL 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # Enable Touchpad Support inX11/Wayland
   services.libinput.enable = true;
