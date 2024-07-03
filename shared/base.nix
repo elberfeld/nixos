@@ -113,6 +113,8 @@ in {
     proggyfonts
     spleen
     vistafonts
+    wireguard-go
+    wireguard-tools
   ];
 
   # Automatic upgrades 
