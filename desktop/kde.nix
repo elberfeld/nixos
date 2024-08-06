@@ -28,6 +28,7 @@
     plasma-browser-integration
     sddm
     sddm-kcm 
+    spectacle
 
   ];
 
