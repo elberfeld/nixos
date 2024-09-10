@@ -2,7 +2,7 @@
 
 {
 
-  # Login Manager SDDM with custom Theme 
+  # Display Manager SDDM with custom Theme 
 
   # List of interesting themes:
   # https://store.kde.org/p/1692328

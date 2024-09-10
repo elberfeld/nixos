@@ -8,7 +8,7 @@
       ./desktop/base.nix
       ./shared/docker.nix
       ./desktop/kde.nix
-      ./desktop/sddm.nix
+      ./desktop/lydm.nix
       ./shared/base.nix
       ./shared/libvirt-kvm.nix
       ./shared/powermgmt.nix
