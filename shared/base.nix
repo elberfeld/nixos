@@ -120,14 +120,20 @@ in {
   # Automatic upgrades 
   # https://nixos.wiki/wiki/Automatic_system_upgrades
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/tasks/auto-upgrade.nix
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.dates = "daily";
-  system.autoUpgrade.allowReboot = false;
+  system.autoUpgrade = {
+
+    enable = true;
+    operation = "boot";
+    dates = "hourly";
+    allowReboot = false;
+  };
 
   # Garbage collection 
   nix.settings.auto-optimise-store = true;
-  nix.gc.automatic = true;
-  nix.gc.dates = "daily";
-  nix.gc.options = "--delete-older-than +5";
+  nix.gc = { 
+    automatic = true;
+    dates = "hourly";
+    options = "--delete-older-than +15";
+  };
 
 }
