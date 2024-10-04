@@ -137,7 +137,7 @@ in {
   nix.gc = { 
     automatic = true;
     dates = "hourly";
-    options = "--delete-older-than +15";
+    options = "--delete-older-than +10";
   };
 
 }
