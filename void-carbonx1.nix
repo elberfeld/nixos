@@ -6,10 +6,14 @@
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
       ./desktop/base.nix
-      ./shared/docker.nix
+      #./desktop/gnome.nix
+      ./desktop/hyprland.nix
       ./desktop/kde.nix
+      #./desktop/lightdm.nix
+      #./desktop/sddm.nix
       ./desktop/lydm.nix
       ./shared/base.nix
+      ./shared/docker.nix
       ./shared/libvirt-kvm.nix
       ./shared/powermgmt.nix
       ./shared/yubikey.nix
