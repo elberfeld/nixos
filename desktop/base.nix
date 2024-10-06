@@ -27,7 +27,10 @@
   services.libinput.enable = true;
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.hplipWithPlugin ];
+  };
 
   # Enable sound with pipewire. Disable pulseaudio
   hardware.pulseaudio.enable = false;
