@@ -29,13 +29,13 @@ in {
 
   # Select internationalisation properties.
   i18n.supportedLocales = [ ENGLISH_UTF8 GERMAN_UTF8 ];
-  i18n.defaultLocale = ENGLISH;
+  i18n.defaultLocale = GERMAN;
   i18n.extraLocaleSettings = {
 
-    LANG = ENGLISH;
-    LC_ALL = ENGLISH;
-    LC_IDENTIFICATION = ENGLISH;
-    LC_MESSAGES = ENGLISH;
+    LANG = GERMAN;
+    LC_ALL = GERMAN;
+    LC_IDENTIFICATION = GERMAN;
+    LC_MESSAGES = GERMAN;
 
     LC_ADDRESS = GERMAN;
     LC_CTYPE = GERMAN;
