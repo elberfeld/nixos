@@ -27,9 +27,33 @@
   services.libinput.enable = true;
 
   # Enable CUPS to print documents.
+  # see https://nixos.wiki/wiki/Printing
   services.printing = {
     enable = true;
-    drivers = [ pkgs.hplipWithPlugin ];
+    drivers = [ 
+      # Drivers for many different printers from many different vendors.
+      pkgs.gutenprint
+      # Additional, binary-only drivers for some printers.
+      pkgs.gutenprintBin
+      # Drivers for HP printers.
+      pkgs.hplip
+      # Drivers for HP printers, with the proprietary plugin. Use NIXPKGS_ALLOW_UNFREE=1 nix-shell -p hplipWithPlugin --run 'sudo -E hp-setup' to add the printer, regular CUPS UI doesn't seem to work.
+      #pkgs.hplipWithPlugin 
+      # Postscript drivers for Lexmark
+      #pkgs.postscript-lexmark
+      # Proprietary Samsung Drivers
+      #pkgs.samsung-unified-linux-driver
+      # Drivers for printers supporting SPL (Samsung Printer Language).
+      #pkgs.splix
+      # Drivers for some Brother printers
+      #pkgs.brlaser
+      # Generic drivers for more Brother printers 
+      # https://support.brother.com/g/s/id/linux/en/instruction_prn1a.html
+      #pkgs.brgenml1lpr
+      #pkgs.brgenml1cupswrapper 
+      # Drivers for some Canon Pixma devices (Proprietary driver)
+      #pkgs.cnijfilter2
+    ];
   };
 
   # Enable sound with pipewire. Disable pulseaudio
