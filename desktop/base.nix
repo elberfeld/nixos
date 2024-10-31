@@ -20,6 +20,13 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true; 
 
+  # Enable Avahi for network discovery and mdns
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
   # Enable OpenGL 
   hardware.graphics.enable = true;
 
