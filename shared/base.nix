@@ -109,7 +109,16 @@ in {
     iosevka
     jetbrains-mono
     liberation_ttf
-    nerdfonts
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.code-new-roman
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.monaspace
+    nerd-fonts.ubuntu
+    nerd-fonts.ubuntu-mono
+    nerd-fonts.ubuntu-sans
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
