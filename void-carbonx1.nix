@@ -6,7 +6,7 @@
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
       ./desktop/base.nix
-      #./desktop/cinnamon.nix
+      ./desktop/cinnamon.nix
       #./desktop/gnome.nix
       #./desktop/hyprland.nix
       ./desktop/kde.nix
@@ -15,8 +15,9 @@
       ./desktop/lydm.nix
       ./shared/base.nix
       ./shared/docker.nix
-      ./shared/libvirt-kvm.nix
+      #./shared/libvirt-kvm.nix
       ./shared/powermgmt.nix
+      ./shared/virtualbox.nix
       ./shared/yubikey.nix
       ./user/chris.nix
     ];
@@ -54,6 +55,9 @@
   # Define your hostname
   networking.hostName = "void-carbonx1"; 
 
+  # Allow UDP port for AusweisApp
+  networking.firewall.allowedUDPPorts = [ 24727 ];
+  
   # Lenovo Device Info
   # https://psref.lenovo.com/Detail/ThinkPad_X1_Carbon_Gen_10?M=21CB00AEMB
   
@@ -67,12 +71,12 @@
   # Camera
   # currently unstable, causes system freeze after standby/suspend
   # see https://github.com/NixOS/nixpkgs/issues/225743
-  hardware.ipu6 = {
-    enable = true;
-    platform = "ipu6ep";
-  };
+#  hardware.ipu6 = {
+#    enable = true;
+#    platform = "ipu6ep";
+#  };
   # see https://github.com/NixOS/nixpkgs/issues/225743#issuecomment-2429437779
-  boot.kernelPackages = pkgs.linuxPackages_latest; 
+#  boot.kernelPackages = pkgs.linuxPackages_latest; 
 
   # FCC Unlock for integrated LTE Modem
   # curently not working, see
