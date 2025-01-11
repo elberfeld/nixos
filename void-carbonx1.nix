@@ -6,7 +6,7 @@
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
       ./desktop/base.nix
-      ./desktop/cinnamon.nix
+      #./desktop/cinnamon.nix
       #./desktop/gnome.nix
       #./desktop/hyprland.nix
       ./desktop/kde.nix
