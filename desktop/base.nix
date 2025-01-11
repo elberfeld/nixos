@@ -64,7 +64,7 @@
   };
 
   # Enable sound with pipewire. Disable pulseaudio
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -95,13 +95,13 @@
 
   # Fix Filepickers for Firefox
   # https://wiki.archlinux.org/title/firefox#XDG_Desktop_Portal_integration
-  programs.firefox = {                  
-    enable = true;
-    preferences = {
-    "widget.use-xdg-desktop-portal.file-picker" = 1;
-    "widget.use-xdg-desktop-portal.mime-handler" = 1;
-    };
-  };
+  # programs.firefox = {                  
+  #  enable = true;
+  #  preferences = {
+  #  "widget.use-xdg-desktop-portal.file-picker" = 1;
+  #  "widget.use-xdg-desktop-portal.mime-handler" = 1;
+  #  };
+  #};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
