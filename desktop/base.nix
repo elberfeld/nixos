@@ -108,9 +108,9 @@
   # vscode: to enable sudo commands in vscode terminal, run: code --no-sandbox
   environment.systemPackages = with pkgs; [
 
+    bitwarden-desktop
     flatpak
     gparted
-    hamsket # not available as flatpak
     nextcloud-client # better system integration than flatpak
     vscode # git does not work properly as flatpak
     wireshark
