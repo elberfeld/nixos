@@ -6,7 +6,7 @@
   services.desktopManager.plasma6.enable = true;
   
   # XDG Portal for kde
-  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-kde ];
+  xdg.portal.extraPortals = with pkgs; [ kdePackages.xdg-desktop-portal-kde ];
 
   # Exclude default Packages 
   environment.plasma6.excludePackages = with pkgs.kdePackages; [

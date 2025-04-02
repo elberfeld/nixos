@@ -114,7 +114,7 @@
     nextcloud-client # better system integration than flatpak
     vscode # git does not work properly as flatpak
     wireshark
-    yubikey-manager-qt # not available as flatpak
+    yubioath-flutter # not available as flatpak
 
   ];
 
