@@ -2,8 +2,16 @@
 
 {
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.desktopManager.gnome.enable = true;
+  # Enable the GNOME Plasma Desktop Environment.
+  # Add extra setting to enable fractional scaling, see https://discourse.nixos.org/t/how-to-set-fractional-scaling-via-nix-configuration-for-gnome-wayland/56774
+  services.xserver.desktopManager.gnome = {
+    enable = true;
+    extraGSettingsOverridePackages = [ pkgs.mutter ];
+    extraGSettingsOverrides = ''
+      [org.gnome.mutter]
+      experimental-features=['scale-monitor-framebuffer']
+    '';
+  };
   
   # XDG Portal for kde
   xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gnome ];
