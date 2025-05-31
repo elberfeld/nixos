@@ -4,7 +4,7 @@
 
   # Enable the GNOME Plasma Desktop Environment.
   # Add extra setting to enable fractional scaling, see https://discourse.nixos.org/t/how-to-set-fractional-scaling-via-nix-configuration-for-gnome-wayland/56774
-  services.xserver.desktopManager.gnome = {
+  services.desktopManager.gnome = {
     enable = true;
     extraGSettingsOverridePackages = [ pkgs.mutter ];
     extraGSettingsOverrides = ''
