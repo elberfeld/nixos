@@ -65,18 +65,15 @@
   # https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
 
 
-  # Fingerprint Sensor - 24.03.2024 Temporary disabled due to build errors
-  services.fprintd.enable = true;
+  # Fingerprint Sensor 
+  # Causes Login delay, see https://github.com/NixOS/nixpkgs/issues/239770
+  # services.fprintd.enable = true;
 
-  # Camera
-  # currently unstable, causes system freeze after standby/suspend
-  # see https://github.com/NixOS/nixpkgs/issues/225743
-#  hardware.ipu6 = {
-#    enable = true;
-#    platform = "ipu6ep";
-#  };
-  # see https://github.com/NixOS/nixpkgs/issues/225743#issuecomment-2429437779
-#  boot.kernelPackages = pkgs.linuxPackages_latest; 
+  # Camera - see https://github.com/NixOS/nixpkgs/issues/225743
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep";
+  };
 
   # FCC Unlock for integrated LTE Modem
   # curently not working, see
