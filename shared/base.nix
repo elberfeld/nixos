@@ -20,9 +20,8 @@ in {
   # Firmware Update service - https://nixos.wiki/wiki/Fwupd
   services.fwupd.enable = true;
 
-  # Reuced wait time for jobs on reboot 
-  systemd.extraConfig = ''DefaultTimeoutStopSec=10s'';
-  systemd.user.extraConfig = ''DefaultTimeoutStopSec=10s'';
+  # Reduced wait time for jobs on reboot 
+  systemd.settings.Manager.DefaultTimeoutStopSec = "10s";
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
