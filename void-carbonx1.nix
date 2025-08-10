@@ -7,7 +7,8 @@
       /etc/nixos/hardware-configuration.nix
       ./desktop/base.nix
       #./desktop/cinnamon.nix
-      #./desktop/gnome.nix
+      ./desktop/gnome.nix
+      #./desktop/gnome-breezy-desktop.nix
       #./desktop/hyprland.nix
       ./desktop/kde.nix
       #./desktop/lightdm.nix
