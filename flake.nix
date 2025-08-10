@@ -22,11 +22,6 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
           ./hosts/void-carbonx1.nix
           ./shared/base.nix
           ./desktop/base.nix
@@ -37,6 +32,11 @@
           ./shared/virtualbox.nix
           ./shared/yubikey.nix
           ./user/chris.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
         ];
       };
 
@@ -44,11 +44,6 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
           ./hosts/void-yoga.nix
           ./shared/base.nix
           ./desktop/base.nix
@@ -60,6 +55,11 @@
           ./shared/powermgmt.nix
           ./shared/yubikey.nix
           ./user/chris.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
         ];
       };
 
