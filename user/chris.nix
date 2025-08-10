@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 {
-
-  imports = [ 
-    <home-manager/nixos> 
-  ];
-
+  # Home-manager configuration is now handled in flake.nix
 
   users.users.chris = {
     
