@@ -3,8 +3,9 @@
 {
   imports = [
     # Include the results of the hardware scan.
-    # Note: Copy /etc/nixos/hardware-configuration.nix to hosts/void-carbonx1-hardware.nix
-    # /etc/nixos/hardware-configuration.nix
+    # For testing, uncomment the line below:
+    # ./example-hardware.nix
+    # For production, copy /etc/nixos/hardware-configuration.nix to ./void-carbonx1-hardware.nix and uncomment:
     # ./void-carbonx1-hardware.nix
   ];
 

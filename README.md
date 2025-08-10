@@ -77,6 +77,9 @@ nix develop
 
 # Build specific configuration
 nix build .#nixosConfigurations.<hostname>.config.system.build.toplevel
+
+# Test build without hardware requirements (dry-run)
+nix build .#nixosConfigurations.void-carbonx1.config.system.build.toplevel --dry-run
 ```
 
 ## Migration from Channels
