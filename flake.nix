@@ -35,6 +35,7 @@
           ./shared/yubikey.nix
 
           ./desktop/base.nix
+          ./desktop/displaylink.nix
           ./desktop/kde.nix
           ./desktop/lydm.nix
 
@@ -64,6 +65,7 @@
           ./shared/yubikey.nix
 
           ./desktop/base.nix
+          ./desktop/displaylink.nix
           ./desktop/kde.nix
           ./desktop/hyprland.nix
           ./desktop/sddm.nix

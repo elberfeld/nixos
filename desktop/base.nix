@@ -5,11 +5,6 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Ugreen Revodok Pro 209
-  # Display Link Driver - https://nixos.wiki/wiki/Displaylink
-  # Driver Blob must be prefetched: $ nix-prefetch-url --name displaylink-600.zip https://www.synaptics.com/sites/default/files/exe_files/2024-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.0-EXE.zip
-  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "de";
