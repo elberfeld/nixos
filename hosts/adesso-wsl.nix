@@ -1,21 +1,22 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  # Enable WSL
+
   wsl.enable = true;
   wsl.defaultUser = "chris";
 
   # Define your hostname
   networking.hostName = "adesso-wsl"; 
 
-  # Additional packages for WSL environment
   environment.systemPackages = with pkgs; [
+
     ansible
     direnv
     neovim
     socat
     thunderbird
     vscode
+
   ];
 
   # This value determines the NixOS release from which the default
@@ -26,3 +27,4 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
 }
+
