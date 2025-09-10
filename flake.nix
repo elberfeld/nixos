@@ -22,21 +22,28 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+
           ./hosts/void-carbonx1.nix
+          ./hosts/void-carbonx1-hardware.nix
+
+          ./user/chris.nix
+
           ./shared/base.nix
-          ./desktop/base.nix
-          ./desktop/kde.nix
-          ./desktop/lydm.nix
           ./shared/docker.nix
           ./shared/powermgmt.nix
           ./shared/virtualbox.nix
           ./shared/yubikey.nix
-          ./user/chris.nix
+
+          ./desktop/base.nix
+          ./desktop/kde.nix
+          ./desktop/lydm.nix
+
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
           }
+
         ];
       };
 
@@ -44,22 +51,29 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+
           ./hosts/void-yoga.nix
+          # TODO: ./hosts/void-yoga-hardware.nix
+
+          ./user/chris.nix
+
           ./shared/base.nix
-          ./desktop/base.nix
-          ./desktop/kde.nix
-          ./desktop/hyprland.nix
-          ./desktop/sddm.nix
           ./shared/docker.nix
           ./shared/libvirt-kvm.nix
           ./shared/powermgmt.nix
           ./shared/yubikey.nix
-          ./user/chris.nix
+
+          ./desktop/base.nix
+          ./desktop/kde.nix
+          ./desktop/hyprland.nix
+          ./desktop/sddm.nix
+
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
           }
+
         ];
       };
 
@@ -68,17 +82,23 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+
+          ./hosts/adesso-wsl.nix
+
+          ./user/chris.nix
+          
+          ./shared/base.nix
+          ./shared/docker.nix
+          
+          ./desktop/base.nix
+
           nixos-wsl.nixosModules.wsl
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
           }
-          ./hosts/adesso-wsl.nix
-          ./shared/base.nix
-          ./shared/docker.nix
-          ./desktop/base.nix
-          ./user/chris.nix
+
         ];
       };
     };
