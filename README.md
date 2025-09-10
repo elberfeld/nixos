@@ -32,18 +32,15 @@ sudo nixos-rebuild switch --flake .#<hostname>
 
 ## Available Configurations
 
-- **void-carbonx1**: ThinkPad X1 Carbon Gen 10 with KDE desktop
-- **void-yoga**: Yoga laptop with KDE and Hyprland desktops  
-- **adesso-wsl**: WSL2 configuration for development
+- **void-carbonx1**: ThinkPad X1 Carbon Gen 10 Laptop
+- **void-yoga**: ThinkPad Yoga Laptop   
+- **adesso-wsl**: WSL2 on Windows 11
 
 ## Configuration Structure
 
 ```
 ├── flake.nix              # Main flake configuration
 ├── hosts/                 # Host-specific configurations
-│   ├── void-carbonx1.nix
-│   ├── void-yoga.nix
-│   └── adesso-wsl.nix
 ├── desktop/               # Desktop environment modules
 ├── shared/                # Shared system modules
 ├── user/                  # User configurations
@@ -79,30 +76,8 @@ nix develop
 nix build .#nixosConfigurations.<hostname>.config.system.build.toplevel
 
 # Test build without hardware requirements (dry-run)
-nix build .#nixosConfigurations.void-carbonx1.config.system.build.toplevel --dry-run
+nix build .#nixosConfigurations.<hostname>.config.system.build.toplevel --dry-run
 ```
-
-## Migration from Channels
-
-If migrating from the old channel-based setup:
-
-1. Remove old channels:
-```bash
-sudo nix-channel --remove nixos
-sudo nix-channel --remove home-manager
-```
-
-2. Backup your current configuration:
-```bash
-sudo cp /etc/nixos/configuration.nix /etc/nixos/configuration.nix.backup
-```
-
-3. The old configuration files (`*.nix` in the root) are now replaced by:
-   - `void-carbonx1.nix` → `hosts/void-carbonx1.nix`
-   - `void-yoga.nix` → `hosts/void-yoga.nix`
-   - `adesso-wsl.nix` → `hosts/adesso-wsl.nix`
-
-4. Use flake-based rebuild commands as shown above.
 
 ## Clone with SSH Key from Yubikey 
 
@@ -131,7 +106,7 @@ git clone git@github.com:elberfeld/nixos.git
 cd nixos
 
 # Apply WSL configuration
-sudo nixos-rebuild switch --flake .#adesso-wsl
+sudo nixos-rebuild switch --flake .#<hostname>
 ```
 
 4. Restart WSL:
@@ -151,11 +126,3 @@ fi
 ssh-add -l
 ```
 
-## Features
-
-- **Modular configuration**: Separated into logical modules for easy maintenance
-- **Multiple desktop environments**: KDE, Hyprland, GNOME, Cinnamon support
-- **Hardware-specific optimizations**: Power management, device drivers
-- **Developer tools**: Docker, virtualization, development packages
-- **Security**: Yubikey integration, firewall configuration
-- **Automatic updates**: System upgrades and garbage collection
