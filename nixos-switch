@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+# NixOS Flake Configuration Switch Script
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+FLAKE_DIR="$SCRIPT_DIR"
+
+# Set up Nix experimental features
+export NIX_CONFIG="experimental-features = nix-command flakes"
+
+# Available configurations
+CONFIGS=("void-carbonx1" "void-yoga" "adesso-wsl")
+
+show_help() {
+    echo "Usage: $0 [COMMAND] [HOSTNAME]"
+    echo ""
+    echo "Commands:"
+    echo "  switch   Apply configuration immediately (default)"
+    echo "  boot     Apply configuration on next boot"
+    echo "  test     Test configuration without making it default"
+    echo "  build    Build configuration without applying"
+    echo "  update   Update flake inputs"
+    echo "  show     Show available configurations"
+    echo ""
+    echo "Available hostnames:"
+    for config in "${CONFIGS[@]}"; do
+        echo "  - $config"
+    done
+    echo ""
+    echo "Examples:"
+    echo "  $0 switch void-carbonx1    # Switch to void-carbonx1 configuration"
+    echo "  $0 boot void-yoga          # Apply void-yoga on next boot"
+    echo "  $0 update                  # Update all flake inputs"
+}
+
+if [[ $# -eq 0 ]] || [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+    show_help
+    exit 0
+fi
+
+COMMAND="$1"
+
+case "$COMMAND" in
+    show)
+        echo "Available NixOS configurations:"
+        nix flake show "$FLAKE_DIR"
+        exit 0
+        ;;
+    update)
+        echo "Updating flake inputs..."
+        cd "$FLAKE_DIR"
+        nix flake update
+        echo "Flake inputs updated successfully!"
+        exit 0
+        ;;
+    switch|boot|test|build)
+        if [[ $# -lt 2 ]]; then
+            echo "Error: Hostname required for $COMMAND command"
+            echo ""
+            show_help
+            exit 1
+        fi
+        HOSTNAME="$2"
+        
+        # Validate hostname
+        if [[ ! " ${CONFIGS[@]} " =~ " ${HOSTNAME} " ]]; then
+            echo "Error: Unknown hostname '$HOSTNAME'"
+            echo "Available hostnames: ${CONFIGS[*]}"
+            exit 1
+        fi
+        ;;
+    *)
+        echo "Error: Unknown command '$COMMAND'"
+        echo ""
+        show_help
+        exit 1
+        ;;
+esac
+
+cd "$FLAKE_DIR"
+
+case "$COMMAND" in
+    switch)
+        echo "Switching to configuration: $HOSTNAME"
+        sudo nixos-rebuild switch --flake ".#$HOSTNAME"
+        ;;
+    boot)
+        echo "Preparing configuration for next boot: $HOSTNAME"
+        sudo nixos-rebuild boot --flake ".#$HOSTNAME"
+        ;;
+    test)
+        echo "Testing configuration: $HOSTNAME"
+        sudo nixos-rebuild test --flake ".#$HOSTNAME"
+        ;;
+    build)
+        echo "Building configuration: $HOSTNAME"
+        nix build ".#nixosConfigurations.$HOSTNAME.config.system.build.toplevel"
+        echo "Build completed successfully!"
+        ;;
+esac
+
+echo "Operation completed successfully!"

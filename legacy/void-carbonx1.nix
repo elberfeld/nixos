@@ -2,26 +2,6 @@
 
 {
 
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-      ./desktop/base.nix
-      #./desktop/cinnamon.nix
-      #./desktop/gnome.nix
-      #./desktop/hyprland.nix
-      ./desktop/kde.nix
-      #./desktop/lightdm.nix
-      #./desktop/sddm.nix
-      ./desktop/lydm.nix
-      ./shared/base.nix
-      ./shared/docker.nix
-      #./shared/libvirt-kvm.nix
-      ./shared/powermgmt.nix
-      ./shared/virtualbox.nix
-      ./shared/yubikey.nix
-      ./user/chris.nix
-    ];
-
   # Bootloader Settimgs
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -48,9 +28,6 @@
   #boot.initrd.systemd.enable = true;
   #boot.plymouth.enable = true;
   #boot.plymouth.theme = "breeze";
-
-  # Luks devices
-  boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265".device = "/dev/disk/by-uuid/0d883292-d0a9-470e-bbc1-e12030fa0265";
 
   # Define your hostname
   networking.hostName = "void-carbonx1"; 

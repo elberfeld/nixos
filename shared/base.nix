@@ -54,6 +54,9 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Enable flakes and new nix command
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Passwordless sudo for group wheel  
   security.sudo.wheelNeedsPassword = false;
 

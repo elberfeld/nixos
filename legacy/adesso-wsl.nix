@@ -2,8 +2,7 @@
 
 {
   imports = [
-    # include NixOS-WSL modules
-    <nixos-wsl/modules>
+    # NixOS-WSL modules are now imported via flake.nix
     ./shared/base.nix
     ./shared/docker.nix
     ./desktop/base.nix
