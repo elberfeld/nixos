@@ -28,6 +28,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     gnome-tweaks
+    gparted
   ];
 
 }

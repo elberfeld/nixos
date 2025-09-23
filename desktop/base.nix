@@ -106,7 +106,6 @@
     beeper # not available as flatpak
     bitwarden-desktop
     flatpak
-    gparted
     nextcloud-client # better system integration than flatpak
     vscode # git does not work properly as flatpak
     wireshark

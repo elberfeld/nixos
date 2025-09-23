@@ -25,6 +25,7 @@
     kate
     konsole
     neochat
+    partitionmanager
     plasma-browser-integration
     sddm
     sddm-kcm 
