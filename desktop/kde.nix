@@ -24,18 +24,12 @@
     #kamoso - 10.03.2024 - Package is broken
     kate
     konsole
-    neochat
     partitionmanager
     plasma-browser-integration
     sddm
     sddm-kcm 
     spectacle
 
-  ];
-
-  # needed for neochat 
-  nixpkgs.config.permittedInsecurePackages = [
-    "olm-3.2.16"
   ];
 
 }
