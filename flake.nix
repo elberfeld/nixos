@@ -36,6 +36,7 @@
 
           ./desktop/base.nix
           ./desktop/displaylink.nix
+          ./desktop/hyprland.nix
           ./desktop/kde.nix
           ./desktop/lydm.nix
 
