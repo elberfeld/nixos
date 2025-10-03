@@ -21,7 +21,7 @@
     discover
     dolphin
     dolphin-plugins
-    #kamoso - 10.03.2024 - Package is broken
+    kamoso
     kate
     konsole
     partitionmanager

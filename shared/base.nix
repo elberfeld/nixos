@@ -85,6 +85,7 @@ in {
     mosh 
     nano
     neovim
+    nmap
     nushell
     pciutils
     powertop

@@ -106,12 +106,15 @@
     appimage-run
     beeper # not available as flatpak
     bitwarden-desktop
+    element-desktop
     flatpak
+    keepassxc
     nextcloud-client # better system integration than flatpak
     vscode # git does not work properly as flatpak
     wireshark
     yubioath-flutter # not available as flatpak
+    zenmap
 
   ];
-
+  
 }
