@@ -103,6 +103,7 @@
   # vscode: to enable sudo commands in vscode terminal, run: code --no-sandbox
   environment.systemPackages = with pkgs; [
 
+    appimage-run
     beeper # not available as flatpak
     bitwarden-desktop
     flatpak
