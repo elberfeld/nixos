@@ -44,7 +44,7 @@
 
   # Fingerprint Sensor 
   # Causes Login delay, see https://github.com/NixOS/nixpkgs/issues/239770
-  # services.fprintd.enable = true;
+  services.fprintd.enable = true;
 
   # Camera - see https://github.com/NixOS/nixpkgs/issues/225743
   hardware.ipu6 = {
