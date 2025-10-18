@@ -5,8 +5,9 @@
   # Ugreen Revodok Pro 209
   # Display Link Driver - https://nixos.wiki/wiki/Displaylink
   # Driver Blob must be prefetched: 
-  # (2024-05 Version - working) nix-prefetch-url --name displaylink-600.zip https://www.synaptics.com/sites/default/files/exe_files/2024-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.0-EXE.zip
-  # (2025-04 Version - current) nix-prefetch-url --name displaylink-600.zip https://www.synaptics.com/sites/default/files/exe_files/2025-04/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.1.1-EXE.zip
+  # (2024-05 Version - old working) nix-prefetch-url --name displaylink-600.zip https://www.synaptics.com/sites/default/files/exe_files/2024-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.0-EXE.zip
+  # (2025-04 Version - old working) nix-prefetch-url --name displaylink-600.zip https://www.synaptics.com/sites/default/files/exe_files/2025-04/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.1.1-EXE.zip
+  # (2025-09 Version - current) nix-prefetch-url --name displaylink-620.zip https://www.synaptics.com/sites/default/files/exe_files/2025-09/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.2-EXE.zip
 
   boot = {
     extraModulePackages = [ config.boot.kernelPackages.evdi ];
