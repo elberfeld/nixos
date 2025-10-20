@@ -21,6 +21,7 @@
     protonplus
     protonup-qt
     protontricks
+    winetricks
 
   ];
   
