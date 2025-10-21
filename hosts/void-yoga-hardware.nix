@@ -4,9 +4,11 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ 
+    (
+      modulesPath + "/installer/scan/not-detected.nix"
+    )
+  ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
@@ -16,27 +18,25 @@
   boot.initrd.luks.devices."luks-d3e77a6e-5470-4423-b9df-ae4a6fa6f12b".device = "/dev/disk/by-uuid/d3e77a6e-5470-4423-b9df-ae4a6fa6f12b";
   boot.initrd.luks.devices."luks-1151810a-9681-4ea5-8c74-1e3886f7a091".device = "/dev/disk/by-uuid/1151810a-9681-4ea5-8c74-1e3886f7a091";
 
-  fileSystems."/boot" =
-  { 
+  fileSystems."/boot" = {
+
     device = "/dev/disk/by-uuid/0A24-D11E";
     fsType = "vfat";
   };
 
-  fileSystems."/" =
-  { 
+  fileSystems."/" = { 
+
     device = "/dev/disk/by-uuid/fd8180b1-88a1-43bf-bfd7-97055433ecd3";
     fsType = "ext4";
   };
 
-  swapDevices =
-  [ 
+  swapDevices = [ 
     { 
       device = "/dev/disk/by-uuid/e7a4f9e8-7485-4124-8639-42aa77e7ad15"; 
     }
   ];
 
-  boot.kernelParams = 
-  [ 
+  boot.kernelParams = [ 
     "resume=/dev/disk/by-uuid/e7a4f9e8-7485-4124-8639-42aa77e7ad15" 
   ];
 
