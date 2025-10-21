@@ -13,30 +13,34 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/fd8180b1-88a1-43bf-bfd7-97055433ecd3";
-      fsType = "ext4";
-    };
-
   boot.initrd.luks.devices."luks-d3e77a6e-5470-4423-b9df-ae4a6fa6f12b".device = "/dev/disk/by-uuid/d3e77a6e-5470-4423-b9df-ae4a6fa6f12b";
+  boot.initrd.luks.devices."luks-1151810a-9681-4ea5-8c74-1e3886f7a091".device = "/dev/disk/by-uuid/1151810a-9681-4ea5-8c74-1e3886f7a091";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0A24-D11E";
-      fsType = "vfat";
-    };
+  { 
+    device = "/dev/disk/by-uuid/0A24-D11E";
+    fsType = "vfat";
+  };
+
+  fileSystems."/" =
+  { 
+    device = "/dev/disk/by-uuid/fd8180b1-88a1-43bf-bfd7-97055433ecd3";
+    fsType = "ext4";
+  };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/e7a4f9e8-7485-4124-8639-42aa77e7ad15"; }
-    ];
+  [ 
+    { 
+      device = "/dev/disk/by-uuid/e7a4f9e8-7485-4124-8639-42aa77e7ad15"; 
+    }
+  ];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s20u2u1.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp0s20u1.useDHCP = lib.mkDefault true;
+  boot.kernelParams = 
+  [ 
+    "resume=/dev/disk/by-uuid/e7a4f9e8-7485-4124-8639-42aa77e7ad15" 
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

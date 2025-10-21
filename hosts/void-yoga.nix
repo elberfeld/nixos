@@ -19,9 +19,6 @@
   #boot.plymouth.enable = true;
   #boot.plymouth.theme = "breeze";
 
-  # Enable swap on luks
-  boot.initrd.luks.devices."luks-1151810a-9681-4ea5-8c74-1e3886f7a091".device = "/dev/disk/by-uuid/1151810a-9681-4ea5-8c74-1e3886f7a091";
-
   # Hostname
   networking.hostName = "void-yoga"; 
 

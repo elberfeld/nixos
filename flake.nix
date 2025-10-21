@@ -55,21 +55,19 @@
         modules = [
 
           ./hosts/void-yoga.nix
-          # TODO: ./hosts/void-yoga-hardware.nix
+          ./hosts/void-yoga-hardware.nix
 
           ./user/chris.nix
 
           ./shared/base.nix
           ./shared/docker.nix
-          ./shared/libvirt-kvm.nix
           ./shared/powermgmt.nix
           ./shared/yubikey.nix
 
           ./desktop/base.nix
-          ./desktop/displaylink.nix
-          ./desktop/kde.nix
           ./desktop/hyprland.nix
-          ./desktop/sddm.nix
+          ./desktop/kde.nix
+          ./desktop/lydm.nix
 
           home-manager.nixosModules.home-manager
           {

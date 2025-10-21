@@ -17,21 +17,28 @@
   boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265".device = "/dev/disk/by-uuid/0d883292-d0a9-470e-bbc1-e12030fa0265";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/4847-4B41";
-      fsType = "vfat";
-    };
+  { 
+    device = "/dev/disk/by-uuid/4847-4B41";
+    fsType = "vfat";
+  };
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/d5767c9a-c3fe-4b28-a58b-4eb480ad319d";
-      fsType = "ext4";
-    };
-
+  { 
+    device = "/dev/disk/by-uuid/d5767c9a-c3fe-4b28-a58b-4eb480ad319d";
+    fsType = "ext4";
+  };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/5e751dc0-b5ab-454a-b4f9-decd8a6ca10f"; }
-    ];
+  [ 
+    { 
+      device = "/dev/disk/by-uuid/5e751dc0-b5ab-454a-b4f9-decd8a6ca10f"; 
+    }
+  ];
 
-  boot.kernelParams = [ "resume=/dev/disk/by-uuid/5e751dc0-b5ab-454a-b4f9-decd8a6ca10f" ];
+  boot.kernelParams = 
+  [ 
+    "resume=/dev/disk/by-uuid/5e751dc0-b5ab-454a-b4f9-decd8a6ca10f" 
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
