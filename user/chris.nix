@@ -39,8 +39,10 @@
 
       git = {
         enable = true;
-        userName  = "Christian Elberfeld";
-        userEmail = "6413499+elberfeld@users.noreply.github.com";
+        settings.user = {
+          name  = "Christian Elberfeld";
+          email = "6413499+elberfeld@users.noreply.github.com";
+        };
       };
 
     }; 
