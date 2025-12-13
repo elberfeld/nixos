@@ -7,6 +7,9 @@ let
   ENGLISH_UTF8 = "en_US.UTF-8/UTF-8";
 in {
 
+  # Always use most recent kernel 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  
   # Enable networking with NetworkManager
   networking.networkmanager.enable = true;
 
