@@ -35,7 +35,6 @@
           ./shared/yubikey.nix
 
           ./desktop/base.nix
-          ./desktop/displaylink.nix
           ./desktop/gaming.nix
           ./desktop/hyprland.nix
           ./desktop/kde.nix
