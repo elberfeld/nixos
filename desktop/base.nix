@@ -109,6 +109,7 @@
     element-desktop
     flatpak
     keepassxc
+    mission-center
     nextcloud-client # better system integration than flatpak
     vscode # git does not work properly as flatpak
     wireshark
