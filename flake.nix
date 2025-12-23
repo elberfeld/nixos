@@ -9,13 +9,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+
+      # Optional but recommended to limit the size of your system closure.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixos-wsl, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
     nixosConfigurations = {
       # Desktop/Laptop configurations
       void-carbonx1 = nixpkgs.lib.nixosSystem {
@@ -30,6 +37,7 @@
 
           ./shared/base.nix
           ./shared/docker.nix
+          ./shared/lanzaboote.nix
           ./shared/powermgmt.nix
           ./shared/virtualbox.nix
           ./shared/yubikey.nix
