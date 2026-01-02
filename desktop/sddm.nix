@@ -21,7 +21,7 @@
     enable = true;
     enableHidpi = true;
     wayland.enable = true;
-    theme = "where-is-my-sddm-theme";
+    # theme = "where-is-my-sddm-theme";
   };
 
   # Workaround to disable onscreen Keyboard, see: https://github.com/NixOS/nixpkgs/issues/55423
@@ -35,11 +35,11 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
+  # environment.systemPackages = with pkgs; [
 
-    where-is-my-sddm-theme
+  #   where-is-my-sddm-theme
     
-  ];
+  # ];
 
 
 }
