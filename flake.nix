@@ -46,7 +46,7 @@
           ./desktop/gaming.nix
           ./desktop/hyprland.nix
           ./desktop/kde.nix
-          ./desktop/sddm.nix
+          ./desktop/lydm.nix
 
           home-manager.nixosModules.home-manager
           {
