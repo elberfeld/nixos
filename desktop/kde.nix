@@ -23,11 +23,10 @@
     dolphin-plugins
     kamoso
     kate
+    kcalc
     konsole
     partitionmanager
     plasma-browser-integration
-    sddm
-    sddm-kcm 
     spectacle
 
   ];
