@@ -1,6 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
+  # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel 
+  # x86_64-v4 is for newer CPUs like interl Skylake and newer
+  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
+  boot.kernelPackages = pkgs.cachyosKernels.linux-cachyos-latest-x86_64-v4;
 
   # Bootloader Settimgs
   boot.loader.efi.canTouchEfiVariables = true;

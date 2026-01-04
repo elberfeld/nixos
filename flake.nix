@@ -25,6 +25,12 @@
     };
   };
 
+  nixConfig = {
+    # Lantian Cache for CachyOS Kernel binaries
+    extra-substituters = [ "https://attic.xuyh0120.win/lantian" ];
+    extra-trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
+  };
+
   outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
     nixosConfigurations = {
       # Desktop/Laptop configurations
