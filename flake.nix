@@ -3,12 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    
+
+    # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
 
@@ -22,7 +25,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
     nixosConfigurations = {
       # Desktop/Laptop configurations
       void-carbonx1 = nixpkgs.lib.nixosSystem {
@@ -36,6 +39,7 @@
           ./user/chris.nix
 
           ./shared/base.nix
+          ./shared/cachyos-kernel.nix
           ./shared/docker.nix
           ./shared/lanzaboote.nix
           ./shared/powermgmt.nix

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   GERMAN = "de_DE.UTF-8";
@@ -7,8 +7,8 @@ let
   ENGLISH_UTF8 = "en_US.UTF-8/UTF-8";
 in {
 
-  # Always use most recent kernel 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Always use most recent kernel by default; hosts can override
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   
   # Enable networking with NetworkManager
   networking.networkmanager.enable = true;
