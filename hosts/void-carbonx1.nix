@@ -4,7 +4,7 @@
   # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel 
   # x86_64-v4 is for newer CPUs like interl Skylake and newer
   nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
-  boot.kernelPackages = pkgs.cachyosKernels.linux-cachyos-latest-x86_64-v4;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v4;
 
   # Bootloader Settimgs
   boot.loader.efi.canTouchEfiVariables = true;
@@ -51,10 +51,15 @@
   services.fprintd.enable = true;
 
   # Camera - see https://github.com/NixOS/nixpkgs/issues/225743
-  hardware.ipu6 = {
-    enable = true;
-    platform = "ipu6ep";
-  };
+  # - https://github.com/NixOS/nixpkgs/issues/225743#issuecomment-3704117883
+  hardware.firmware = with pkgs; [
+    ipu6-camera-bins
+    ivsc-firmware
+  ];  
+  services.udev.extraRules = ''
+    SUBSYSTEM=="intel-ipu6-psys", MODE="0660", GROUP="video"
+  '';
+  boot.extraModulePackages = with config.boot.kernelPackages; [ ipu6-drivers ];
 
   # FCC Unlock for integrated LTE Modem
   # curently not working, see
