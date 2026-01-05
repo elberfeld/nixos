@@ -45,7 +45,6 @@
           ./user/chris.nix
 
           ./shared/base.nix
-          ./shared/cachyos-kernel.nix
           ./shared/docker.nix
           ./shared/lanzaboote.nix
           ./shared/powermgmt.nix
