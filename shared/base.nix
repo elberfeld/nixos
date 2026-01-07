@@ -152,7 +152,7 @@ in {
   nix.gc = { 
     automatic = true;
     dates = "hourly";
-    options = "--delete-older-than +10";
+    options = "--delete-older-than 30d";
   };
 
   security.pki.certificates = [ ''Warpzone internal CA
