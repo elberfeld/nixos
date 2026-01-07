@@ -50,17 +50,6 @@
   # Causes Login delay, see https://github.com/NixOS/nixpkgs/issues/239770
   services.fprintd.enable = true;
 
-  # Camera - see https://github.com/NixOS/nixpkgs/issues/225743
-  # - https://github.com/NixOS/nixpkgs/issues/225743#issuecomment-3704117883
-  hardware.firmware = with pkgs; [
-    ipu6-camera-bins
-    ivsc-firmware
-  ];  
-  services.udev.extraRules = ''
-    SUBSYSTEM=="intel-ipu6-psys", MODE="0660", GROUP="video"
-  '';
-  boot.extraModulePackages = with config.boot.kernelPackages; [ ipu6-drivers ];
-
   # FCC Unlock for integrated LTE Modem
   # curently not working, see
   # https://modemmanager.org/docs/modemmanager/fcc-unlock/#integration-with-third-party-fcc-unlock-tools

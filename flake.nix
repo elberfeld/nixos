@@ -47,6 +47,7 @@
           ./shared/base.nix
           ./shared/docker.nix
           ./shared/lanzaboote.nix
+          ./shared/mipi-ipu6-camera.nix
           ./shared/powermgmt.nix
           ./shared/virtualbox.nix
           ./shared/yubikey.nix
