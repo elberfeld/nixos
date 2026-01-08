@@ -17,8 +17,6 @@
 
   environment.systemPackages = with pkgs; [
     libcamera
-    libcamera-qcam
-    #cheese
   ];
 
   # https://jgrulich.cz/2024/08/19/making-pipewire-default-option-for-firefox-camera-handling/
@@ -28,6 +26,4 @@
     };
   };
 
-  # group is set in user configuration 
-  # users.users.SAMPLEUSER.extraGroups = [ "video" ];
 }

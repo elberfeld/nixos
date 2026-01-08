@@ -21,9 +21,6 @@
       # user can use sudo 
       "wheel"
 
-      # v4l access - see https://github.com/NixOS/nixpkgs/issues/225743#issuecomment-3717229119 
-      "video"
-
       # user can control virtual machines
       "libvirtd"
       "vboxusers"
