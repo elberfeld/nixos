@@ -51,6 +51,7 @@
           ./shared/lanzaboote.nix
           ./shared/powermgmt.nix
           ./shared/virtualbox.nix
+          ./shared/yubikey.nix
 
           ./desktop/base.nix
           ./desktop/gaming.nix
