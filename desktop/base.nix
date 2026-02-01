@@ -113,6 +113,7 @@
     vscode # git does not work properly as flatpak
     wireshark
     yubioath-flutter # not available as flatpak
+    xpipe
     zenmap
 
   ];
