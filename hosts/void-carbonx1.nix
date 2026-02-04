@@ -6,39 +6,15 @@
   nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
   boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v4;
 
-  # Bootloader Settimgs
+  # Bootloader Settings
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use Systemd-Boot
   boot.loader.systemd-boot = { 
     enable = true;
     editor = false;
-#    consoleMode = "1";
     consoleMode = "max";
   };
-
-  # Use Grub
-  #boot.loader.grub = {
-  #  enable = true;
-  #  useOSProber = true;
-  #  device = "nodev";
-  #  efiSupport = true;
-  #  gfxpayloadEfi = "keep";
-  #  gfxmodeEfi = "1920x1200x32";
-  #  theme = pkgs.sleek-grub-theme;
-  #};
-
-  # Unlock with TPM 
-  # Initialize: sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 --wipe-slot=tpm2 <device>
-  # see: https://jnsgr.uk/2024/04/nixos-secure-boot-tpm-fde/
-  security.tpm2.enable = true;
-  boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.tpm2.enable = true;
-
-  # Graphical boot scren 
-  #boot.initrd.systemd.enable = true;
-  #boot.plymouth.enable = true;
-  #boot.plymouth.theme = "breeze";
 
   # Define your hostname
   networking.hostName = "void-carbonx1"; 

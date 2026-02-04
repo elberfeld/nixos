@@ -14,10 +14,6 @@
     consoleMode = "max";
   };
 
-  # Graphical boot scren 
-  #boot.initrd.systemd.enable = true;
-  #boot.plymouth.enable = true;
-  #boot.plymouth.theme = "breeze";
 
   # Hostname
   networking.hostName = "void-yoga"; 

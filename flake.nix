@@ -45,6 +45,7 @@
           ./user/chris.nix
 
           ./hardware/mipi-ipu6-camera.nix
+          ./hardware/tpm2-unlock.nix
 
           ./shared/base.nix
           ./shared/docker.nix
