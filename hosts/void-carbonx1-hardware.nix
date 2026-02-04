@@ -15,8 +15,13 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."luks-2df387cd-4f37-4156-8366-21a2851e441c".device = "/dev/disk/by-uuid/2df387cd-4f37-4156-8366-21a2851e441c";
-  boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265".device = "/dev/disk/by-uuid/0d883292-d0a9-470e-bbc1-e12030fa0265";
+  boot.initrd.luks.devices."luks-2df387cd-4f37-4156-8366-21a2851e441c" = {
+    device = "/dev/disk/by-uuid/2df387cd-4f37-4156-8366-21a2851e441c";
+  };
+
+  boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265" = {
+    device = "/dev/disk/by-uuid/0d883292-d0a9-470e-bbc1-e12030fa0265";
+  };
 
   fileSystems."/boot" = {
 
@@ -39,7 +44,7 @@
   boot.kernelParams = [ 
     "resume=/dev/disk/by-uuid/5e751dc0-b5ab-454a-b4f9-decd8a6ca10f" 
   ];
-
+  
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
