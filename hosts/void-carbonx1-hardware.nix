@@ -15,11 +15,13 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."luks-2df387cd-4f37-4156-8366-21a2851e441c" = {
+  boot.initrd.luks.devices."luks-2df387cd-4f37-4156-8366-21a2851e441c" = 
+  {
     device = "/dev/disk/by-uuid/2df387cd-4f37-4156-8366-21a2851e441c";
   };
 
-  boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265" = {
+  boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265" = 
+  {
     device = "/dev/disk/by-uuid/0d883292-d0a9-470e-bbc1-e12030fa0265";
   };
 
