@@ -59,6 +59,7 @@
           ./desktop/hyprland.nix
           ./desktop/kde.nix
           ./desktop/lydm.nix
+          ./desktop/plymouth.nix
 
           home-manager.nixosModules.home-manager
           {
