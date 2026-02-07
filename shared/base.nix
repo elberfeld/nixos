@@ -63,6 +63,10 @@ in {
   # Passwordless sudo for group wheel  
   security.sudo.wheelNeedsPassword = false;
 
+  # Don't allow to create new users
+  # Change Passwords is still allowed for existing users, but no new users can be created.
+  users.mutableUsers = false; 
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
