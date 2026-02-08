@@ -2,6 +2,10 @@
 
 {
 
+  # Plymouth theme overlay
+  # https://github.com/SergioRibera/s4rchiso-plymouth-theme
+  nixpkgs.overlays = [ inputs.mac-style-plymouth.overlays.default ];
+
   # Graphical boot screen 
   boot.initrd.systemd.enable = true;
   boot.initrd.verbose = false;
@@ -19,7 +23,8 @@
 
   boot.plymouth = {
     enable = true;
-    theme = "breeze";
+    theme = "mac-style";
+    themePackages = [ pkgs.mac-style-plymouth ];
 
     extraConfig = ''
       [Daemon]
