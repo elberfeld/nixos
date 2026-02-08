@@ -14,8 +14,11 @@
     
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-      # Optional but recommended to limit the size of your system closure.
+    mac-style-plymouth = {
+      url = "github:SergioRibera/s4rchiso-plymouth-theme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -48,18 +51,19 @@
           ./hardware/tpm2-unlock.nix
 
           ./shared/base.nix
-          ./shared/docker.nix
+          #./shared/docker.nix
           ./shared/lanzaboote.nix
           ./shared/powermgmt.nix
-          ./shared/virtualbox.nix
+          #./shared/virtualbox.nix
           ./shared/yubikey.nix
 
           ./desktop/base.nix
           ./desktop/gaming.nix
           ./desktop/hyprland.nix
           ./desktop/kde.nix
-          ./desktop/lydm.nix
-          ./desktop/plymouth.nix
+          #./desktop/lydm.nix
+          #./desktop/plymouth.nix
+          ./desktop/sddm.nix
 
           home-manager.nixosModules.home-manager
           {
