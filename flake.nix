@@ -36,7 +36,9 @@
 
   outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
     nixosConfigurations = {
+
       # Desktop/Laptop configurations
+
       void-carbonx1 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
@@ -62,6 +64,36 @@
           ./desktop/hyprland.nix
           ./desktop/kde.nix
           #./desktop/lydm.nix
+          #./desktop/plymouth.nix
+          ./desktop/sddm.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+
+        ];
+      };
+
+      void-desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+
+          ./hosts/void-desktop.nix
+          ./hosts/void-desktop-hardware.nix
+
+          ./user/chris.nix
+
+          ./hardware/nvidia_desktop.nix
+
+          ./shared/base.nix
+          ./shared/yubikey.nix
+
+          ./desktop/base.nix
+          ./desktop/gaming.nix
+          ./desktop/kde.nix
           #./desktop/plymouth.nix
           ./desktop/sddm.nix
 
