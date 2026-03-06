@@ -42,11 +42,16 @@
   #   { id = "1199:9079"; path = "${pkgs.modemmanager}/share/ModemManager/fcc-unlock.available.d/1199:9079"; }
   # ];
 
+  # Blacklist the iosm module (Intel LTE modem driver) because it causes hibernation to hang
+  # with "msg timeout" errors. The modem doesn't work anyway (FCC unlock issue).
+  # boot.blacklistedKernelModules = [ "iosm" ];
+
+
   # exclude WWAN from Powersave 
   # see https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
-  services.tlp.settings = {
-    RUNTIME_PM_DENYLIST="08:00.0";
-  };
+  #services.tlp.settings = {
+  #  RUNTIME_PM_DENYLIST="08:00.0";
+  #};
 
   #fonts.fontconfig.dpi = 135;
   #i18n.consoleFont = "ter-132b";
