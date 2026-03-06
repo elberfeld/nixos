@@ -81,6 +81,7 @@ in {
     curl
     dig
     direnv
+    exfatprogs
     git
     gitui
     glibcLocales
