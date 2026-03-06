@@ -20,9 +20,12 @@
     device = "/dev/disk/by-uuid/2df387cd-4f37-4156-8366-21a2851e441c";
   };
 
+  # Swap partition LUKS - must be unlocked before hibernation resume
   boot.initrd.luks.devices."luks-0d883292-d0a9-470e-bbc1-e12030fa0265" = 
   {
     device = "/dev/disk/by-uuid/0d883292-d0a9-470e-bbc1-e12030fa0265";
+    # Allow discards for SSD TRIM support
+    allowDiscards = true;
   };
 
   fileSystems."/boot" = 
@@ -43,9 +46,11 @@
     }
   ];
 
-  boot.kernelParams = [ 
-    "resume=/dev/disk/by-uuid/5e751dc0-b5ab-454a-b4f9-decd8a6ca10f" 
-  ];
+  # Hibernation resume with LUKS-encrypted swap:
+  # With systemd-initrd, we point resumeDevice to the UNLOCKED swap mapper device.
+  # systemd-hibernate-resume-generator will create a unit that depends on this device,
+  # and systemd will wait for the device to appear (after LUKS unlock) before resume.
+  boot.resumeDevice = "/dev/mapper/luks-0d883292-d0a9-470e-bbc1-e12030fa0265";
   
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
