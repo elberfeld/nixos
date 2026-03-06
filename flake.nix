@@ -53,7 +53,7 @@
           ./hardware/tpm2-unlock.nix
 
           ./shared/base.nix
-          #./shared/docker.nix
+          ./shared/docker.nix
           ./shared/lanzaboote.nix
           ./shared/powermgmt.nix
           #./shared/virtualbox.nix
@@ -61,7 +61,7 @@
 
           ./desktop/base.nix
           ./desktop/gaming.nix
-          ./desktop/hyprland.nix
+          #./desktop/hyprland.nix
           ./desktop/kde.nix
           #./desktop/lydm.nix
           #./desktop/plymouth.nix
