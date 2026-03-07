@@ -33,19 +33,11 @@
   # Causes Login delay, see https://github.com/NixOS/nixpkgs/issues/239770
   services.fprintd.enable = true;
 
-  # FCC Unlock for integrated LTE Modem
-  # curently not working, see
-  # https://modemmanager.org/docs/modemmanager/fcc-unlock/#integration-with-third-party-fcc-unlock-tools
-  # https://forums.lenovo.com/t5/Other-Linux-Discussions/L860GL-fcc-unlock-issue/m-p/5233291
-  # systemd.services.ModemManager.enable = true;
-  # networking.networkmanager.fccUnlockScripts = [
-  #   { id = "1199:9079"; path = "${pkgs.modemmanager}/share/ModemManager/fcc-unlock.available.d/1199:9079"; }
-  # ];
-
   # Blacklist the iosm module (Intel LTE modem driver) because it causes hibernation to hang
   # with "msg timeout" errors. The modem doesn't work anyway (FCC unlock issue).
   # boot.blacklistedKernelModules = [ "iosm" ];
-
+  # Note: blacklisting the module breaks the fingeprint Reader
+  # => Deactivated Wireless WAN in BIOS settings 
 
   # exclude WWAN from Powersave 
   # see https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
