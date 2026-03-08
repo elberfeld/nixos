@@ -23,6 +23,20 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "chris";
 
+  # Additional Disks: Kingstoin SSD for Games
+  fileSystems."/games" =
+  { 
+    device = "/dev/disk/by-uuid/888f57ec-e4a1-49d5-9da4-f2f4913db200";
+    fsType = "ext4";
+  };
+
+  # Additional Disks: WD Red for Data
+  fileSystems."/data" =
+  { 
+    device = "/dev/disk/by-uuid/9419485c-3dae-4946-89af-e9179c5fcfef";
+    fsType = "ext4";
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
