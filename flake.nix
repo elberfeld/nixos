@@ -17,6 +17,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     mac-style-plymouth = {
       url = "github:SergioRibera/s4rchiso-plymouth-theme";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +39,7 @@
     extra-trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, stylix, nixos-wsl, home-manager, ... }@inputs: {
     nixosConfigurations = {
 
       # Desktop/Laptop configurations
@@ -66,6 +71,9 @@
           #./desktop/lydm.nix
           #./desktop/plymouth.nix
           ./desktop/sddm.nix
+          ./desktop/stylix.nix
+
+          stylix.nixosModules.stylix
 
           home-manager.nixosModules.home-manager
           {
