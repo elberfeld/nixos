@@ -65,6 +65,7 @@
           ./shared/yubikey.nix
 
           ./desktop/base.nix
+          ./desktop/devtools.nix
           ./desktop/gaming.nix
           #./desktop/hyprland.nix
           ./desktop/kde.nix
