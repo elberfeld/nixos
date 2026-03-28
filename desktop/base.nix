@@ -103,6 +103,10 @@
   #  };
   #};
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "jitsi-meet-1.0.8792"
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # vscode: to enable sudo commands in vscode terminal, run: code --no-sandbox

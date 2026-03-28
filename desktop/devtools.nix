@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, claude-desktop, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
 
@@ -8,7 +8,7 @@
   environment.systemPackages = with pkgs; [
 
     claude-code
-    claude-desktop-with-fhs # see https://github.com/k3d3/claude-desktop-linux-flake
+    inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop-with-fhs # see https://github.com/k3d3/claude-desktop-linux-flake
     drawio
     git
     opencode
