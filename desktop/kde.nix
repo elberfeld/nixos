@@ -25,7 +25,6 @@
     kamoso
     kate
     kcalc
-    kommit
     konsole
     partitionmanager
     plasma-browser-integration
