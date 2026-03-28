@@ -109,18 +109,27 @@
   environment.systemPackages = with pkgs; [
 
     appimage-run
+    ausweisapp
     beeper # not available as flatpak
     bitwarden-desktop
+    chromium
     element-desktop
+    firefox
     flatpak
     gparted
+    inkscape
+    jitsi-meet
+    libreoffice-qt-fresh
     mission-center
     nextcloud-client # better system integration than flatpak
+    thunderbird
+    vlc
     vscode # git does not work properly as flatpak
     wireshark
     yubioath-flutter # not available as flatpak
     xpipe
     zenmap
+    zettlr
 
   ];
   

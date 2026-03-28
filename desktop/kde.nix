@@ -11,7 +11,6 @@
   # Exclude default Packages 
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     elisa
-    gwenview
   ];
 
   # List packages installed in system profile. To search, run:
