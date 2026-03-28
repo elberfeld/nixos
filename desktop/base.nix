@@ -123,7 +123,6 @@
     gparted
     inkscape
     jitsi-meet
-    libreoffice-qt-fresh
     mission-center
     nextcloud-client # better system integration than flatpak
     thunderbird

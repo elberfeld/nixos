@@ -17,12 +17,15 @@
   # $ nix search wget
   environment.systemPackages = with pkgs.kdePackages; [
 
+    ark
+    calligra
     discover
     dolphin
     dolphin-plugins
     kamoso
     kate
     kcalc
+    kommit
     konsole
     partitionmanager
     plasma-browser-integration
