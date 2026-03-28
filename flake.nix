@@ -22,6 +22,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    claude-desktop = {
+      url = "github:k3d3/claude-desktop-linux-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +39,7 @@
     extra-trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, claude-desktop, home-manager, ... }@inputs: {
     nixosConfigurations = {
 
       # Desktop/Laptop configurations
