@@ -28,6 +28,7 @@
     konsole
     partitionmanager
     plasma-browser-integration
+    plasma-integration
     spectacle
 
   ];

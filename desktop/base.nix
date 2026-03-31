@@ -125,11 +125,14 @@
     jitsi-meet
     mission-center
     nextcloud-client # better system integration than flatpak
+    mpv
     thunderbird
     vlc
     vscode # git does not work properly as flatpak
     wireshark
     yubioath-flutter # not available as flatpak
+    yt-dlp
+    yt-dlg
     xpipe
     zenmap
     zettlr
