@@ -21,6 +21,7 @@
     enable = true;
     enableHidpi = true;
     wayland.enable = true;
+    theme = "breeze";
     # theme = "where-is-my-sddm-theme";
   };
 
