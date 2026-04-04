@@ -59,6 +59,7 @@
 
           ./shared/base.nix
           ./shared/docker.nix
+          ./shared/heidisql.nix
           ./shared/lanzaboote.nix
           ./shared/powermgmt.nix
           #./shared/virtualbox.nix
