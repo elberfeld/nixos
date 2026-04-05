@@ -53,6 +53,19 @@ let
       openssl
     ];
 
+    # Eigene qt6ct-Konfiguration mit hellem Fusion-Style für HeidiSQL.
+    qt6ctConf = pkgs.writeTextDir "qt6ct/qt6ct.conf" ''
+      [Appearance]
+      color_scheme_path=
+      custom_palette=false
+      standard_dialogs=default
+      style=Fusion
+
+      [Fonts]
+      fixed="Monospace,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+      general="Sans Serif,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+    '';
+
     desktopItems = [
       (pkgs.makeDesktopItem {
         name = "heidisql";
@@ -90,7 +103,12 @@ let
       # Wrapper setzt LD_LIBRARY_PATH, damit die kopierten Libs beim Start gefunden werden.
       mkdir -p $out/bin
       makeWrapper $out/lib/heidisql/heidisql $out/bin/heidisql \
-        --prefix LD_LIBRARY_PATH : "$out/lib/heidisql:${pkgs.lib.makeLibraryPath runtimeLibs}:${pkgs.mariadb-connector-c}/lib/mariadb"
+        --prefix LD_LIBRARY_PATH : "$out/lib/heidisql:${pkgs.lib.makeLibraryPath runtimeLibs}:${pkgs.mariadb-connector-c}/lib/mariadb" \
+        --set QT_QPA_PLATFORMTHEME qt6ct \
+        --set QT_PLUGIN_PATH "${pkgs.qt6Packages.qt6ct}/lib/qt-6/plugins" \
+        --prefix XDG_CONFIG_DIRS : "${qt6ctConf}" \
+        --unset KDE_COLOR_SCHEME_PATH \
+        --unset KDEGLOBALS
 
       runHook postInstall
     '';
