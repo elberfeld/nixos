@@ -57,11 +57,12 @@
           ./shared/heidisql.nix
           ./shared/lanzaboote.nix
           ./shared/powermgmt.nix
-          #./shared/virtualbox.nix
+          ./shared/virtualbox.nix
           ./shared/yubikey.nix
 
           ./desktop/base.nix
           ./desktop/devtools.nix
+          ./desktop/distrobox.nix
           ./desktop/gaming.nix
           #./desktop/hyprland.nix
           ./desktop/kde.nix
