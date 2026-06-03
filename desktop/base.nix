@@ -104,6 +104,7 @@
   #};
 
   nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
     "jitsi-meet-1.0.8792"
   ];
 
