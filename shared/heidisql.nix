@@ -38,12 +38,12 @@ let
 
     buildInputs = with pkgs; [
       qt6Packages.libqtpas
-      xorg.libX11
+      libx11
     ];
 
     runtimeLibs = with pkgs; [
       qt6Packages.libqtpas
-      xorg.libX11
+      libx11
       stdenv.cc.cc.lib
       zlib
       mariadb-connector-c
