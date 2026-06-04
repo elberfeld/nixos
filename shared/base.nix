@@ -57,6 +57,9 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Allow running dynamically linked executables (e.g. VSCodium/VSCode extensions like Kilo Code)
+  programs.nix-ld.enable = true;
+
 
   # Enable flakes and new nix command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
