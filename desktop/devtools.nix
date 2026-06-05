@@ -13,6 +13,7 @@
     kilocode-cli
     opencode
     opencode-desktop
+    python3
     vscode 
     vscodium
     wireshark
