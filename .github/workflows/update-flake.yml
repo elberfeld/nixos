@@ -1,0 +1,66 @@
+name: Update Flake und Build
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # täglich 3 Uhr UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update flake.lock
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          nix flake update --commit-lock-file
+
+      - name: Push
+        run: git push
+
+  build:
+    needs: update
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        host:
+          - void-desktop
+          - void-carbonx1
+    steps:
+      - name: Checkout (aktueller Stand nach Update)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Speicherplatz freigeben
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
+          df -h
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: elberfeld
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Build ${{ matrix.host }}
+        run: |
+          nix build '.#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel' \
+            --no-link \
+            --print-build-logs
