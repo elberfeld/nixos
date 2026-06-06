@@ -89,6 +89,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "flake.lock unverändert – kein Commit nötig"
           else
-            git commit -m "chore: update flake.lock"
+            git commit -m "Update flake.lock by GitHub Actions"
             git push
           fi
