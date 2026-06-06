@@ -67,8 +67,9 @@
           #./desktop/hyprland.nix
           ./desktop/kde.nix
           #./desktop/lydm.nix
+          ./desktop/plasma-login-manager.nix
           #./desktop/plymouth.nix
-          ./desktop/sddm.nix
+          #./desktop/sddm.nix
 
           home-manager.nixosModules.home-manager
           {
