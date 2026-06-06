@@ -66,6 +66,7 @@ jobs:
       - name: Build ${{ matrix.host }}
         run: |
           nix build '.#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel' \
+            --accept-flake-config \
             --no-link \
             --print-build-logs
 
