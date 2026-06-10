@@ -1,5 +1,8 @@
 { config, lib, pkgs, inputs, ... }:
 
+let
+  evolisPrinterDriver = pkgs.callPackage ../thirdparty/evolis-cups-driver.nix {};
+in
 {
   # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel 
   # x86_64-v4 is for newer CPUs like interl Skylake and newer
@@ -32,6 +35,9 @@
 
   # Disable fingerprint authentication for console login as fallback 
   security.pam.services.login.fprintAuth = false;
+
+  # Evolis card printer CUPS driver (from thirdparty .deb)
+  services.printing.drivers = [ evolisPrinterDriver ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

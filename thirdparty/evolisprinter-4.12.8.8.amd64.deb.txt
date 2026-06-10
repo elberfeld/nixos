@@ -1,0 +1,3 @@
+Driver for Evolis Dualys3 Card Printer 
+Original file name: 64 bit version - evolisprinter-4.12.8.8.amd64.deb
+Source: https://www.zovertang.co.uk/blogs/printers/id-card-printer-drivers
