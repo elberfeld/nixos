@@ -10,7 +10,7 @@
     # inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop-with-fhs # Disabled: upstream flake uses unmaintained nodePackages
     drawio
     git
-    kilocode-cli
+    #kilocode-cli
     opencode
     opencode-desktop
     python3
