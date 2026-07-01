@@ -65,6 +65,8 @@
           ./shared/virtualbox.nix
           ./shared/yubikey.nix
 
+          ./thirdparty/forticlient.nix
+
           ./desktop/base.nix
           ./desktop/devtools.nix
           ./desktop/distrobox.nix
@@ -100,6 +102,8 @@
           ./shared/base.nix
           ./shared/yubikey.nix
 
+          ./thirdparty/forticlient.nix
+
           ./desktop/base.nix
           ./desktop/gaming.nix
           ./desktop/kde.nix
@@ -129,6 +133,8 @@
           ./shared/docker.nix
           ./shared/powermgmt.nix
           ./shared/yubikey.nix
+
+          ./thirdparty/forticlient.nix
 
           ./desktop/base.nix
           ./desktop/hyprland.nix
