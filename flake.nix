@@ -154,10 +154,8 @@
 
           ./user/nixos.nix
           
-          #./shared/base.nix
-          #./shared/docker.nix
-          
-          #./desktop/base.nix
+          ./shared/base.nix
+
 
           nixos-wsl.nixosModules.wsl
           home-manager.nixosModules.home-manager
