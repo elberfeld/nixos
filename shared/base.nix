@@ -71,6 +71,7 @@ in {
     dig
     direnv
     exfatprogs
+    fastfetch
     git
     gitui
     glibcLocales

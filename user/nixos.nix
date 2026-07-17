@@ -37,6 +37,22 @@
 
     programs = {
 
+      bash = {
+        enable = true;
+        bashrcExtra = ''
+          export SSH_AUTH_SOCK=/tmp/wincrypt-hv.sock
+          ss -lnx | grep -q $SSH_AUTH_SOCK
+          if [ $? -ne 0 ]; then
+            rm -f $SSH_AUTH_SOCK
+            (setsid nohup socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork SOCKET-CONNECT:40:0:x0000x33332222x02000000x00000000 >/dev/null 2>&1)
+          fi
+
+          sleep 1
+          fastfetch --structure "title:separator:os:host:kernel:uptime:shell:display:terminal:cpu:gpu:memory:swap:disk:locale"
+          ssh-add -l
+        '';
+      };
+
       git = {
         enable = true;
         settings.user = {
