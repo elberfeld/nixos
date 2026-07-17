@@ -16,4 +16,11 @@
   # Enable Power Profiles Daemon 
   services.power-profiles-daemon.enable = true;
 
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+
+    powertop
+  ];
+
 }

@@ -7,21 +7,6 @@ let
   ENGLISH_UTF8 = "en_US.UTF-8/UTF-8";
 in {
 
-  # Always use most recent kernel by default; hosts can override
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
-  
-  # Enable networking with NetworkManager
-  networking.networkmanager.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-  networking.firewall.enable = true;
-
-  # Firmware Update service - https://nixos.wiki/wiki/Fwupd
-  services.fwupd.enable = true;
 
   # Reduced wait time for jobs on reboot 
   systemd.settings.Manager.DefaultTimeoutStopSec = "10s";
@@ -100,7 +85,6 @@ in {
     nmap
     nushell
     pciutils
-    powertop
     psmisc
     starship
     tmux
@@ -141,8 +125,6 @@ in {
     proggyfonts
     spleen
     vista-fonts
-    wireguard-go
-    wireguard-tools
   ];
 
   # Automatic upgrades 

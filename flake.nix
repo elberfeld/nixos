@@ -62,8 +62,8 @@
           ./shared/heidisql.nix
           ./shared/lanzaboote.nix
           ./shared/powermgmt.nix
+          ./shared/physicalmachine.nix
           ./shared/virtualbox.nix
-          ./shared/yubikey.nix
 
           ./desktop/base.nix
           ./desktop/devtools.nix
@@ -98,7 +98,7 @@
           ./hardware/nvidia_desktop.nix
 
           ./shared/base.nix
-          ./shared/yubikey.nix
+          ./shared/physicalmachine.nix
 
           ./desktop/base.nix
           ./desktop/gaming.nix
@@ -128,7 +128,7 @@
           ./shared/base.nix
           ./shared/docker.nix
           ./shared/powermgmt.nix
-          ./shared/yubikey.nix
+          ./shared/physicalmachine.nix
 
           ./desktop/base.nix
           ./desktop/hyprland.nix
