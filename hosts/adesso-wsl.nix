@@ -16,7 +16,6 @@
     direnv
     nano
     socat
-    vscode
     wget
 
   ];
