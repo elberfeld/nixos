@@ -152,12 +152,12 @@
 
           ./hosts/adesso-wsl.nix
 
-          ./user/chris.nix
+          ./user/nixos.nix
           
-          ./shared/base.nix
-          ./shared/docker.nix
+          #./shared/base.nix
+          #./shared/docker.nix
           
-          ./desktop/base.nix
+          #./desktop/base.nix
 
           nixos-wsl.nixosModules.wsl
           home-manager.nixosModules.home-manager
