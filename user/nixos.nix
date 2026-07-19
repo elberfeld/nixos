@@ -47,9 +47,8 @@
             (setsid nohup socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork SOCKET-CONNECT:40:0:x0000x33332222x02000000x00000000 >/dev/null 2>&1)
           fi
 
-          sleep 1
           fastfetch --structure "title:separator:os:host:kernel:uptime:shell:display:terminal:cpu:gpu:memory:swap:disk:locale"
-          ssh-add -l
+          (sleep 1 && ssh-add -l) &
         '';
       };
 
