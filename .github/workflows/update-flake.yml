@@ -1,9 +1,6 @@
 name: Update Flake und Build
 
 on:
-  push:
-    branches:
-    - master
   schedule:
     - cron: '0 3 * * *'  # täglich 3 Uhr UTC
   workflow_dispatch:
