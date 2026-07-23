@@ -18,7 +18,7 @@
   environment.systemPackages = with pkgs.kdePackages; [
 
     ark
-    calligra
+    #calligra
     discover
     dolphin
     dolphin-plugins
