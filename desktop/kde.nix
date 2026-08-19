@@ -18,7 +18,7 @@
   environment.systemPackages = with pkgs.kdePackages; [
 
     ark
-    #calligra 
+    calligra 
     discover
     dolphin
     dolphin-plugins
@@ -26,6 +26,7 @@
     kate
     kcalc
     konsole
+    libreoffice-qt-fresh
     partitionmanager
     plasma-browser-integration
     plasma-integration
