@@ -26,7 +26,6 @@
     kate
     kcalc
     konsole
-    libreoffice-qt-fresh
     partitionmanager
     plasma-browser-integration
     plasma-integration
