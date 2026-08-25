@@ -122,9 +122,12 @@
     firefox
     flatpak
     gparted
+    hunspell
+    hunspellDicts.de_DE
+    hunspellDicts.en_US
     inkscape
     jitsi-meet
-    libreoffice-qt-fresh
+    libreoffice-qt
     mission-center
     nextcloud-client # better system integration than flatpak
     mpv
