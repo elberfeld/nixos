@@ -30,6 +30,12 @@ sudo cp /etc/nixos/hardware-configuration.nix hosts/<hostname>-hardware.nix
 sudo nixos-rebuild switch --flake .#<hostname>
 ```
 
+5. Adjust origing url for pull wthout SSH Key 
+```bash
+git remote set-url origin https://github.com/elberfeld/nixos.git
+git remote set-url --push origin git@github.com:elberfeld/nixos.git
+```
+
 ## Available Configurations
 
 - **void-carbonx1**: ThinkPad X1 Carbon Gen 10 Laptop
