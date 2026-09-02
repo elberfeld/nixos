@@ -103,10 +103,8 @@
   #  };
   #};
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-39.8.10"
-    "jitsi-meet-1.0.8792"
-  ];
+  # Allow insecure marked jitsi-meet package
+  nixpkgs.config.permitInsecurePredicate = pkg: lib.hasPrefix "jitsi-meet-1.0." pkg.name;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
