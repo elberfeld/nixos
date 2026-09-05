@@ -1,0 +1,124 @@
+name: Auto-Fix bei fehlgeschlagenem Flake-Update
+
+# Läuft, sobald der Workflow "Update Flake und Build" abgeschlossen ist.
+#
+# Benötigte Konfiguration unter Settings -> Secrets and variables -> Actions:
+#   Variables (Tab "Variables"):
+#     OPENAI_COMPATIBLE_BASE_URL  - API-Endpunkt, z.B. https://openrouter.ai/api/v1
+#     OPENAI_COMPATIBLE_MODEL     - Modell-ID des Endpunkts, z.B. anthropic/claude-sonnet-4.5
+#   Secrets (Tab "Secrets"):
+#     OPENAI_COMPATIBLE_API_KEY   - API-Key für den Endpunkt
+on:
+  workflow_run:
+    workflows: ["Update Flake und Build"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: read
+
+jobs:
+  autofix:
+    # Nur aktiv werden, wenn "Update Flake und Build" NICHT erfolgreich war (failure, cancelled, timed_out, ...).
+    if: github.event.workflow_run.conclusion != 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (Stand des fehlgeschlagenen Laufs)
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: true
+
+      - name: Aktualisierte flake.lock aus fehlgeschlagenem Lauf laden
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@v7
+        with:
+          name: flake-lock
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Speicherplatz freigeben
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v17
+        with:
+          name: elberfeld
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      # Baut alle Hosts erneut und schreibt sämtliche Fehlermeldungen mit,
+      # damit OpenCode eine konkrete Grundlage zur Analyse hat.
+      - name: Build-Fehler reproduzieren und protokollieren
+        run: |
+          set +e
+          : > build-error.log
+          for host in void-desktop void-carbonx1 adesso-wsl; do
+            echo "### Build $host ###" >> build-error.log
+            nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
+              --accept-flake-config --no-link --print-build-logs >> build-error.log 2>&1
+          done
+          set -e
+
+      # Bindet einen beliebigen OpenAI-kompatiblen Endpunkt über generische
+      # Variablen ein (URL, Key, Modell), statt einen festen Provider zu verdrahten.
+      - name: OpenCode-Konfiguration für OpenAI-kompatiblen Endpunkt erzeugen
+        env:
+          OPENAI_COMPATIBLE_BASE_URL: ${{ vars.OPENAI_COMPATIBLE_BASE_URL }}
+          OPENAI_COMPATIBLE_MODEL: ${{ vars.OPENAI_COMPATIBLE_MODEL }}
+        run: |
+          cat > opencode.json <<EOF
+          {
+            "\$schema": "https://opencode.ai/config.json",
+            "provider": {
+              "customai": {
+                "npm": "@ai-sdk/openai-compatible",
+                "name": "Custom OpenAI-compatible",
+                "options": {
+                  "baseURL": "${OPENAI_COMPATIBLE_BASE_URL}",
+                  "apiKey": "{env:OPENAI_COMPATIBLE_API_KEY}"
+                },
+                "models": {
+                  "${OPENAI_COMPATIBLE_MODEL}": {}
+                }
+              }
+            }
+          }
+          EOF
+
+      - name: OpenCode Fehleranalyse und Fix
+        uses: anomalyco/opencode/github@latest
+        env:
+          OPENAI_COMPATIBLE_API_KEY: ${{ secrets.OPENAI_COMPATIBLE_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          model: customai/${{ vars.OPENAI_COMPATIBLE_MODEL }}
+          use_github_token: true
+          prompt: |
+            Der geplante Workflow "Update Flake und Build" ist fehlgeschlagen, nachdem
+            flake.lock aktualisiert wurde. Das Fehlerprotokoll steht in der Datei
+            build-error.log im Repository-Root (falls flake.lock nicht geladen werden
+            konnte, prüfe stattdessen, ob build-error.log Hinweise auf ein anderes Problem
+            enthält).
+
+            1. Lies build-error.log und analysiere die Ursache des Fehlers.
+            2. Versuche den Fehler durch Anpassungen an den .nix-Dateien oder an flake.lock
+               zu beheben.
+            3. Verifiziere jeden Fix, indem du für die betroffenen Hosts
+               `nix build .#nixosConfigurations.<host>.config.system.build.toplevel --accept-flake-config --no-link`
+               ausführst.
+            4. Nur wenn der Build für alle Hosts (void-desktop, void-carbonx1, adesso-wsl)
+               erfolgreich ist: erstelle einen neuen Branch, committe alle Änderungen
+               (inklusive flake.lock) und öffne einen Pull Request mit einer Beschreibung
+               des gefundenen Problems und des Fixes.
+            5. Findest du keinen erfolgreichen Fix, nimm keine Änderungen am Repository vor
+               und beschreibe stattdessen im Log, was du versucht hast und woran es
+               gescheitert ist.
