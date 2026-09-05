@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '0 3 * * *'  # täglich 3 Uhr UTC
   workflow_dispatch:
+  pull_request:
 
 permissions:
   contents: write
@@ -23,13 +24,17 @@ jobs:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
 
+      # Bei Pull Requests wird flake.lock nicht angefasst, nur der bestehende Stand gebaut.
       - name: Update flake.lock
+        if: github.event_name != 'pull_request'
         run: nix flake update
 
-      - name: Prüfen ob flake.lock geändert wurde
+      - name: Prüfen ob gebaut werden soll
         id: check
         run: |
-          if git diff --quiet flake.lock; then
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          elif git diff --quiet flake.lock; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -80,14 +85,26 @@ jobs:
 
       - name: Build ${{ matrix.host }}
         run: |
+          set -o pipefail
           nix build '.#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel' \
             --accept-flake-config \
             --no-link \
-            --print-build-logs
+            --print-build-logs 2>&1 | tee build-${{ matrix.host }}.log
+
+      # Wird auch bei Erfolg hochgeladen, damit opencode-autofix bei Bedarf
+      # den vollständigen Kontext aller Hosts hat, ohne selbst neu zu bauen.
+      - name: Build-Log als Artifact speichern
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-log-${{ matrix.host }}
+          path: build-${{ matrix.host }}.log
+          if-no-files-found: ignore
 
   push:
     needs: [update, build]
-    if: needs.update.outputs.changed == 'true'
+    # Nicht bei Pull Requests pushen, da flake.lock dort unangetastet bleibt.
+    if: needs.update.outputs.changed == 'true' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

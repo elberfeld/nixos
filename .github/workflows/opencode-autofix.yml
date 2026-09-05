@@ -27,10 +27,28 @@ permissions:
   actions: read
 
 jobs:
+  check-open-pr:
+    # Verhindert Duplikate und reagiert nur auf fehlgeschlagene Builds des main-Branches
+    # (update-flake läuft inzwischen auch für Pull Requests, die hier nicht gemeint sind).
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion != 'success' && github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    outputs:
+      pr_exists: ${{ steps.check.outputs.exists }}
+    steps:
+      - name: Prüfen ob bereits ein offener Opencode-Autofix-PR existiert
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          count=$(gh pr list --repo "${{ github.repository }}" --state open \
+            --search "Opencode-Autofix in:title" --json number --jq 'length')
+          echo "exists=$([ "$count" -gt 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
   autofix:
-    # Laeuft bei manuellem Start immer, sonst nur wenn "Update Flake und Build" NICHT erfolgreich war
-    # (failure, cancelled, timed_out, ...).
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion != 'success'
+    needs: check-open-pr
+    if: needs.check-open-pr.outputs.pr_exists != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (Stand des fehlgeschlagenen bzw. aktuellen Laufs)
@@ -40,11 +58,22 @@ jobs:
           persist-credentials: true
 
       - name: Aktualisierte flake.lock aus fehlgeschlagenem Lauf laden
-        id: download
         continue-on-error: true
         uses: actions/download-artifact@v7
         with:
           name: flake-lock
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ inputs.run_id || github.event.workflow_run.id }}
+
+      # Von "Update Flake und Build" bereits gesammelte Build-Logs aller Hosts laden,
+      # damit hier nicht nochmal selbst gebaut werden muss um an die Fehlermeldung zu kommen.
+      - name: Build-Logs aus dem Update-Flake-Lauf laden
+        continue-on-error: true
+        uses: actions/download-artifact@v7
+        with:
+          pattern: build-log-*
+          path: build-logs
+          merge-multiple: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ inputs.run_id || github.event.workflow_run.id }}
 
@@ -63,18 +92,8 @@ jobs:
           name: elberfeld
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
-      # Baut alle Hosts erneut und schreibt sämtliche Fehlermeldungen mit,
-      # damit OpenCode eine konkrete Grundlage zur Analyse hat.
-      - name: Build-Fehler reproduzieren und protokollieren
-        run: |
-          set +e
-          : > build-error.log
-          for host in void-desktop void-carbonx1 adesso-wsl; do
-            echo "### Build $host ###" >> build-error.log
-            nix build ".#nixosConfigurations.$host.config.system.build.toplevel" \
-              --accept-flake-config --no-link --print-build-logs >> build-error.log 2>&1
-          done
-          set -e
+      - name: Build-Logs auflisten
+        run: ls -la build-logs/ 2>/dev/null || echo "Keine Build-Logs gefunden"
 
       # Bindet einen beliebigen OpenAI-kompatiblen Endpunkt über generische
       # Variablen ein (URL, Key, Modell), statt einen festen Provider zu verdrahten.
@@ -112,12 +131,12 @@ jobs:
           use_github_token: true
           prompt: |
             Der geplante Workflow "Update Flake und Build" ist fehlgeschlagen, nachdem
-            flake.lock aktualisiert wurde. Das Fehlerprotokoll steht in der Datei
-            build-error.log im Repository-Root (falls flake.lock nicht geladen werden
-            konnte, prüfe stattdessen, ob build-error.log Hinweise auf ein anderes Problem
-            enthält).
+            flake.lock aktualisiert wurde. Die Build-Logs aller Hosts aus diesem Lauf
+            liegen bereits im Verzeichnis build-logs/ (eine Datei pro Host, z.B.
+            build-logs/build-void-desktop.log). Du musst die Konfiguration NICHT selbst
+            neu bauen, um den Fehler zu finden - lies stattdessen direkt diese Logs.
 
-            1. Lies build-error.log und analysiere die Ursache des Fehlers.
+            1. Lies alle Dateien in build-logs/ und analysiere die Ursache des Fehlers.
             2. Versuche den Fehler durch Anpassungen an den .nix-Dateien oder an flake.lock
                zu beheben.
             3. Verifiziere jeden Fix, indem du für die betroffenen Hosts
@@ -125,8 +144,9 @@ jobs:
                ausführst.
             4. Nur wenn der Build für alle Hosts (void-desktop, void-carbonx1, adesso-wsl)
                erfolgreich ist: erstelle einen neuen Branch, committe alle Änderungen
-               (inklusive flake.lock) und öffne einen Pull Request mit einer Beschreibung
-               des gefundenen Problems und des Fixes.
+               (inklusive flake.lock) und öffne einen Pull Request. Der PR-Titel MUSS mit
+               "Opencode-Autofix: " beginnen, gefolgt von einer kurzen Beschreibung des
+               gefundenen Problems und des Fixes.
             5. Findest du keinen erfolgreichen Fix, nimm keine Änderungen am Repository vor
                und beschreibe stattdessen im Log, was du versucht hast und woran es
                gescheitert ist.
