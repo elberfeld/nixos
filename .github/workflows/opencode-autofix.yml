@@ -12,6 +12,13 @@ on:
   workflow_run:
     workflows: ["Update Flake und Build"]
     types: [completed]
+  # Manueller Start ueber Actions -> "Auto-Fix bei fehlgeschlagenem Flake-Update" -> Run workflow.
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Optional: Run-ID von 'Update Flake und Build', deren flake.lock verwendet werden soll"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -21,14 +28,15 @@ permissions:
 
 jobs:
   autofix:
-    # Nur aktiv werden, wenn "Update Flake und Build" NICHT erfolgreich war (failure, cancelled, timed_out, ...).
-    if: github.event.workflow_run.conclusion != 'success'
+    # Laeuft bei manuellem Start immer, sonst nur wenn "Update Flake und Build" NICHT erfolgreich war
+    # (failure, cancelled, timed_out, ...).
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion != 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout (Stand des fehlgeschlagenen Laufs)
+      - name: Checkout (Stand des fehlgeschlagenen bzw. aktuellen Laufs)
         uses: actions/checkout@v5
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           persist-credentials: true
 
       - name: Aktualisierte flake.lock aus fehlgeschlagenem Lauf laden
@@ -38,7 +46,7 @@ jobs:
         with:
           name: flake-lock
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+          run-id: ${{ inputs.run_id || github.event.workflow_run.id }}
 
       - name: Speicherplatz freigeben
         run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
