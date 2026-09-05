@@ -6,8 +6,10 @@ name: Auto-Fix bei fehlgeschlagenem Flake-Update
 #   Variables (Tab "Variables"):
 #     OPENAI_COMPATIBLE_BASE_URL  - API-Endpunkt, z.B. https://openrouter.ai/api/v1
 #     OPENAI_COMPATIBLE_MODEL     - Modell-ID des Endpunkts, z.B. anthropic/claude-sonnet-4.5
+#     CACHIX_CACHE_NAME           - Name des Cachix-Caches
 #   Secrets (Tab "Secrets"):
 #     OPENAI_COMPATIBLE_API_KEY   - API-Key für den Endpunkt
+#     CACHIX_AUTH_TOKEN           - Auth-Token für den Cachix-Cache
 on:
   workflow_run:
     workflows: ["Update Flake und Build"]
@@ -89,7 +91,7 @@ jobs:
       - name: Setup Cachix
         uses: cachix/cachix-action@v17
         with:
-          name: elberfeld
+          name: ${{ vars.CACHIX_CACHE_NAME }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Build-Logs auflisten
