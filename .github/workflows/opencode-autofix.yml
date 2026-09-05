@@ -7,6 +7,7 @@ name: Auto-Fix bei fehlgeschlagenem Flake-Update
 #     OPENAI_COMPATIBLE_BASE_URL  - API-Endpunkt, z.B. https://openrouter.ai/api/v1
 #     OPENAI_COMPATIBLE_MODEL     - Modell-ID des Endpunkts, z.B. anthropic/claude-sonnet-4.5
 #     CACHIX_CACHE_NAME           - Name des Cachix-Caches
+#     AUTOFIX_PR_PREFIX           - PR-Titel-Präfix, z.B. Opencode-Autofix
 #   Secrets (Tab "Secrets"):
 #     OPENAI_COMPATIBLE_API_KEY   - API-Key für den Endpunkt
 #     CACHIX_AUTH_TOKEN           - Auth-Token für den Cachix-Cache
@@ -28,6 +29,10 @@ permissions:
   issues: write
   actions: read
 
+env:
+  # Präfix für den Titel des Autofix-PRs, wird auch zur Duplikatserkennung genutzt.
+  AUTOFIX_PR_PREFIX: ${{ vars.AUTOFIX_PR_PREFIX }}
+
 jobs:
   check-open-pr:
     # Verhindert Duplikate und reagiert nur auf fehlgeschlagene Builds des main-Branches
@@ -45,7 +50,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           count=$(gh pr list --repo "${{ github.repository }}" --state open \
-            --search "Opencode-Autofix in:title" --json number --jq 'length')
+            --search "${{ env.AUTOFIX_PR_PREFIX }} in:title" --json number --jq 'length')
           echo "exists=$([ "$count" -gt 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
 
   autofix:
@@ -147,7 +152,7 @@ jobs:
             4. Nur wenn der Build für alle Hosts (void-desktop, void-carbonx1, adesso-wsl)
                erfolgreich ist: erstelle einen neuen Branch, committe alle Änderungen
                (inklusive flake.lock) und öffne einen Pull Request. Der PR-Titel MUSS mit
-               "Opencode-Autofix: " beginnen, gefolgt von einer kurzen Beschreibung des
+               "${{ env.AUTOFIX_PR_PREFIX }}: " beginnen, gefolgt von einer kurzen Beschreibung des
                gefundenen Problems und des Fixes.
             5. Findest du keinen erfolgreichen Fix, nimm keine Änderungen am Repository vor
                und beschreibe stattdessen im Log, was du versucht hast und woran es
