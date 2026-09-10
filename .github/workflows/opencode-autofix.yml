@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
     inputs:
       run_id:
-        description: "Optional: Run-ID von 'Update Flake und Build', deren flake.lock verwendet werden soll"
+        description: "Optional: Run-ID oder Run-Number (z.B. 102) von 'Update Flake und Build'. Leer = letzter fehlgeschlagener Lauf."
         required: false
         type: string
 
@@ -64,17 +64,60 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           persist-credentials: true
 
+      # Beim manuellen Start ist die 11-stellige Run-ID schlecht auffindbar, in der
+      # Actions-Liste steht nur die kurze Run-Number (z.B. 102). Hier werden daher
+      # beide akzeptiert; ohne Eingabe wird der letzte fehlgeschlagene Lauf genommen.
+      - name: Run-ID von "Update Flake und Build" ermitteln
+        id: source-run
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_RUN_ID: ${{ inputs.run_id }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+
+          if [ -n "$EVENT_RUN_ID" ]; then
+            # Von workflow_run ausgelöst: Die ID steht schon im Event.
+            run_id="$EVENT_RUN_ID"
+          elif [ -z "$INPUT_RUN_ID" ]; then
+            run_id=$(gh run list --repo "$GITHUB_REPOSITORY" \
+              --workflow update-flake.yml --branch main --status failure \
+              --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+            echo "Keine Run-ID angegeben, nutze letzten fehlgeschlagenen Lauf: ${run_id:-keiner gefunden}"
+          else
+            # Eingabe gegen databaseId und number prüfen, damit beides funktioniert.
+            case "$INPUT_RUN_ID" in
+              ''|*[!0-9]*)
+                echo "::error::run_id muss eine Zahl sein, war aber '$INPUT_RUN_ID'."
+                exit 1
+                ;;
+            esac
+            run_id=$(gh run list --repo "$GITHUB_REPOSITORY" \
+              --workflow update-flake.yml --limit 200 --json databaseId,number \
+              --jq "map(select(.databaseId == $INPUT_RUN_ID or .number == $INPUT_RUN_ID)) | .[0].databaseId // empty")
+          fi
+
+          if [ -z "$run_id" ]; then
+            echo "::error::Kein passender Lauf von 'Update Flake und Build' gefunden (Eingabe: '${INPUT_RUN_ID:-<leer>}'). Erlaubt sind Run-ID und Run-Number der letzten 200 Läufe."
+            exit 1
+          fi
+
+          echo "Verwende Lauf $run_id: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$run_id"
+          echo "id=$run_id" >> "$GITHUB_OUTPUT"
+
       - name: Aktualisierte flake.lock aus fehlgeschlagenem Lauf laden
+        id: download-lock
         continue-on-error: true
         uses: actions/download-artifact@v7
         with:
           name: flake-lock
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ inputs.run_id || github.event.workflow_run.id }}
+          run-id: ${{ steps.source-run.outputs.id }}
 
       # Von "Update Flake und Build" bereits gesammelte Build-Logs aller Hosts laden,
       # damit hier nicht nochmal selbst gebaut werden muss um an die Fehlermeldung zu kommen.
       - name: Build-Logs aus dem Update-Flake-Lauf laden
+        id: download-logs
         continue-on-error: true
         uses: actions/download-artifact@v7
         with:
@@ -82,7 +125,26 @@ jobs:
           path: build-logs
           merge-multiple: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ inputs.run_id || github.event.workflow_run.id }}
+          run-id: ${{ steps.source-run.outputs.id }}
+
+      # Läuft absichtlich vor der teuren Nix-Installation: Ohne Build-Logs hat
+      # OpenCode keine Fehlermeldung zu analysieren, dann lieber sofort abbrechen
+      # statt erst mehrere Minuten Setup und einen LLM-Aufruf zu verbrennen.
+      - name: Artefakte prüfen
+        env:
+          RUN_ID: ${{ steps.source-run.outputs.id }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$(ls -A build-logs 2>/dev/null || true)" ]; then
+            echo "::error::Lauf $RUN_ID enthält keine build-log-* Artefakte. Ohne sie kann die Fehlerursache nicht ermittelt werden."
+            exit 1
+          fi
+          ls -la build-logs/
+
+          if [ "${{ steps.download-lock.outcome }}" != "success" ]; then
+            echo "::warning::flake.lock-Artefakt aus Lauf $RUN_ID nicht verfügbar. Analyse läuft gegen die eingecheckte flake.lock."
+          fi
 
       - name: Speicherplatz freigeben
         run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
@@ -98,9 +160,6 @@ jobs:
         with:
           name: ${{ vars.CACHIX_CACHE_NAME }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-
-      - name: Build-Logs auflisten
-        run: ls -la build-logs/ 2>/dev/null || echo "Keine Build-Logs gefunden"
 
       # Bindet einen beliebigen OpenAI-kompatiblen Endpunkt über generische
       # Variablen ein (URL, Key, Modell), statt einen festen Provider zu verdrahten.
