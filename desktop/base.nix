@@ -104,7 +104,8 @@
   #};
 
   # Allow insecure marked jitsi-meet package
-  nixpkgs.config.permitInsecurePredicate = pkg: lib.hasPrefix "jitsi-meet-1.0." pkg.name;
+  nixpkgs.config.allowInsecurePredicate =
+    pkg: (pkg.pname or "") == "jitsi-meet" && lib.hasPrefix "1.0." (pkg.version or "");
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
