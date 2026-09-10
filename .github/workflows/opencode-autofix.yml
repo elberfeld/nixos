@@ -104,12 +104,15 @@ jobs:
 
       # Bindet einen beliebigen OpenAI-kompatiblen Endpunkt über generische
       # Variablen ein (URL, Key, Modell), statt einen festen Provider zu verdrahten.
+      # Liegt in der globalen Config und nicht im Repo, damit die Datei nicht
+      # versehentlich im Autofix-PR mitcommittet wird.
       - name: OpenCode-Konfiguration für OpenAI-kompatiblen Endpunkt erzeugen
         env:
           OPENAI_COMPATIBLE_BASE_URL: ${{ vars.OPENAI_COMPATIBLE_BASE_URL }}
           OPENAI_COMPATIBLE_MODEL: ${{ vars.OPENAI_COMPATIBLE_MODEL }}
         run: |
-          cat > opencode.json <<EOF
+          mkdir -p ~/.config/opencode
+          cat > ~/.config/opencode/opencode.json <<EOF
           {
             "\$schema": "https://opencode.ai/config.json",
             "provider": {
@@ -128,32 +131,55 @@ jobs:
           }
           EOF
 
+      # Bewusst die CLI statt anomalyco/opencode/github: Diese Action wertet das
+      # GitHub-Event aus, um ihren Fortschritt in einen Issue- bzw. PR-Kommentar
+      # zu schreiben. Sie unterstützt daher nur issue_comment, issues,
+      # pull_request, pull_request_review_comment, schedule und
+      # workflow_dispatch und bricht bei workflow_run sofort mit
+      # "Unsupported event type: workflow_run" ab.
+      - name: OpenCode installieren
+        run: curl -fsSL https://opencode.ai/install | bash
+
+      # Ohne Identität scheitert der Commit, den OpenCode in Schritt 4 anlegen soll.
+      - name: Git-Identität für Autofix-Commits setzen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: OpenCode Fehleranalyse und Fix
-        uses: anomalyco/opencode/github@latest
         env:
           OPENAI_COMPATIBLE_API_KEY: ${{ secrets.OPENAI_COMPATIBLE_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          model: customai/${{ vars.OPENAI_COMPATIBLE_MODEL }}
-          use_github_token: true
-          prompt: |
-            Der geplante Workflow "Update Flake und Build" ist fehlgeschlagen, nachdem
-            flake.lock aktualisiert wurde. Die Build-Logs aller Hosts aus diesem Lauf
-            liegen bereits im Verzeichnis build-logs/ (eine Datei pro Host, z.B.
-            build-logs/build-void-desktop.log). Du musst die Konfiguration NICHT selbst
-            neu bauen, um den Fehler zu finden - lies stattdessen direkt diese Logs.
+          # gh liest GH_TOKEN und legt damit Branch und Pull Request an.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > "$RUNNER_TEMP/autofix-prompt.txt" <<'PROMPT'
+          Der geplante Workflow "Update Flake und Build" ist fehlgeschlagen, nachdem
+          flake.lock aktualisiert wurde. Die Build-Logs aller Hosts aus diesem Lauf
+          liegen bereits im Verzeichnis build-logs/ (eine Datei pro Host, z.B.
+          build-logs/build-void-desktop.log). Du musst die Konfiguration NICHT selbst
+          neu bauen, um den Fehler zu finden - lies stattdessen direkt diese Logs.
 
-            1. Lies alle Dateien in build-logs/ und analysiere die Ursache des Fehlers.
-            2. Versuche den Fehler durch Anpassungen an den .nix-Dateien oder an flake.lock
-               zu beheben.
-            3. Verifiziere jeden Fix, indem du für die betroffenen Hosts
-               `nix build .#nixosConfigurations.<host>.config.system.build.toplevel --accept-flake-config --no-link`
-               ausführst.
-            4. Nur wenn der Build für alle Hosts (void-desktop, void-carbonx1, adesso-wsl)
-               erfolgreich ist: erstelle einen neuen Branch, committe alle Änderungen
-               (inklusive flake.lock) und öffne einen Pull Request. Der PR-Titel MUSS mit
-               "${{ env.AUTOFIX_PR_PREFIX }}: " beginnen, gefolgt von einer kurzen Beschreibung des
-               gefundenen Problems und des Fixes.
-            5. Findest du keinen erfolgreichen Fix, nimm keine Änderungen am Repository vor
-               und beschreibe stattdessen im Log, was du versucht hast und woran es
-               gescheitert ist.
+          1. Lies alle Dateien in build-logs/ und analysiere die Ursache des Fehlers.
+          2. Versuche den Fehler durch Anpassungen an den .nix-Dateien oder an flake.lock
+             zu beheben.
+          3. Verifiziere jeden Fix, indem du für die betroffenen Hosts
+             `nix build .#nixosConfigurations.<host>.config.system.build.toplevel --accept-flake-config --no-link`
+             ausführst.
+          4. Nur wenn der Build für alle Hosts (void-desktop, void-carbonx1, adesso-wsl)
+             erfolgreich ist: erstelle einen neuen Branch, committe alle Änderungen
+             (inklusive flake.lock) und öffne mit `gh pr create` einen Pull Request.
+             Git-Identität und GH_TOKEN sind bereits gesetzt. Der PR-Titel MUSS mit
+             "${{ env.AUTOFIX_PR_PREFIX }}: " beginnen, gefolgt von einer kurzen Beschreibung des
+             gefundenen Problems und des Fixes. Committe ausschliesslich Dateien, die
+             zum Fix gehören - insbesondere nicht das Verzeichnis build-logs/.
+          5. Findest du keinen erfolgreichen Fix, nimm keine Änderungen am Repository vor
+             und beschreibe stattdessen im Log, was du versucht hast und woran es
+             gescheitert ist.
+          PROMPT
+
+          # --auto ist in CI nötig: Es gibt kein TTY, um Datei- und Shell-Zugriffe
+          # interaktiv zu bestätigen.
+          opencode run \
+            --model "customai/${{ vars.OPENAI_COMPATIBLE_MODEL }}" \
+            --auto \
+            "$(cat "$RUNNER_TEMP/autofix-prompt.txt")"

@@ -12,3 +12,6 @@ result-*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Von opencode-autofix im Runner abgelegte Build-Logs des fehlgeschlagenen Laufs
+build-logs/
