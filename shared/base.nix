@@ -45,6 +45,14 @@ in {
   # Allow running dynamically linked executables (e.g. VSCodium/VSCode extensions like Kilo Code)
   programs.nix-ld.enable = true;
 
+  # Add Nix Helper 
+  # set up cleanup as service 
+  # https://github.com/nix-community/nh
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 14d --keep 3";
+  };
 
   # Enable flakes and new nix command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -141,12 +149,8 @@ in {
 
   # Garbage collection 
   nix.settings.auto-optimise-store = true;
-  nix.gc = { 
-    automatic = true;
-    dates = "hourly";
-    options = "--delete-older-than 30d";
-  };
 
+  # Warpzone internal CA
   security.pki.certificates = [ ''Warpzone internal CA
 -----BEGIN CERTIFICATE-----
 MIIFBDCCAuygAwIBAgIUJt6dSah3Lpsy3zenka2t+OEOO6AwDQYJKoZIhvcNAQEL
