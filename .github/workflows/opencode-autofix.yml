@@ -11,6 +11,15 @@ name: Auto-Fix bei fehlgeschlagenem Flake-Update
 #   Secrets (Tab "Secrets"):
 #     OPENAI_COMPATIBLE_API_KEY   - API-Key für den Endpunkt
 #     CACHIX_AUTH_TOKEN           - Auth-Token für den Cachix-Cache
+#     PR_TOKEN                    - Personal Access Token (Scope "repo") oder GitHub-App-Token
+#                                   mit PR-Rechten. Das automatisch generierte GITHUB_TOKEN darf
+#                                   auf GitHub grundsätzlich keine Pull Requests erstellen, auch
+#                                   nicht mit "permissions: pull-requests: write" - das ist eine
+#                                   Plattform-Beschränkung gegen Workflow-Eskalation, keine
+#                                   Fehlkonfiguration hier. Ohne PR_TOKEN scheitert `gh pr create`
+#                                   im letzten Schritt. Ist das Secret nicht gesetzt, fällt der
+#                                   Workflow auf GITHUB_TOKEN zurück (Fix wird dann zwar gebaut
+#                                   und committet, aber kein PR geöffnet).
 on:
   workflow_run:
     workflows: ["Update Flake und Build"]
@@ -208,8 +217,10 @@ jobs:
       - name: OpenCode Fehleranalyse und Fix
         env:
           OPENAI_COMPATIBLE_API_KEY: ${{ secrets.OPENAI_COMPATIBLE_API_KEY }}
-          # gh liest GH_TOKEN und legt damit Branch und Pull Request an.
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # gh liest GH_TOKEN und legt damit Branch und Pull Request an. Das
+          # Standard-GITHUB_TOKEN darf plattformseitig keine PRs erstellen
+          # (siehe Kommentar zu PR_TOKEN oben), daher hier bevorzugt PR_TOKEN.
+          GH_TOKEN: ${{ secrets.PR_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           cat > "$RUNNER_TEMP/autofix-prompt.txt" <<'PROMPT'
           Der geplante Workflow "Update Flake und Build" ist fehlgeschlagen, nachdem
