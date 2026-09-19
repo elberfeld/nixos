@@ -39,7 +39,30 @@
     ];
   };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, home-manager, ... }@inputs:
+  let
+    # Workaround for https://github.com/NixOS/nixpkgs/issues/564449
+    # nodejs 26.9.0 fails its test-ci-js check suite in the sandbox because
+    # test-fs-cp-async-file-modes tries to chmod a file to the setuid bit,
+    # which is not permitted inside the Nix build sandbox. Upstream already
+    # fixed this on nixpkgs master (commit 089b82f934ef), but the fix has not
+    # yet reached the nixos-unstable branch our flake.lock is pinned to.
+    # Skip the same test here until our nixpkgs input catches up with that fix.
+    nodejsTestFixOverlay = final: prev: {
+      nodejs-slim_26 = prev.nodejs-slim_26.overrideAttrs (old: {
+        checkFlags = map
+          (flag:
+            if final.lib.hasPrefix "CI_SKIP_TESTS=" flag then
+              flag + ",test-fs-cp-async-file-modes"
+            else
+              flag)
+          old.checkFlags;
+      });
+    };
+
+    nodejsTestFixModule = { nixpkgs.overlays = [ nodejsTestFixOverlay ]; };
+  in
+  {
     nixosConfigurations = {
 
       # Desktop/Laptop configurations
@@ -49,6 +72,7 @@
         specialArgs = { inherit inputs; };
         modules = [
 
+          nodejsTestFixModule
           ./hosts/void-carbonx1.nix
           ./hosts/void-carbonx1-hardware.nix
 
@@ -90,6 +114,7 @@
         specialArgs = { inherit inputs; };
         modules = [
 
+          nodejsTestFixModule
           ./hosts/void-desktop.nix
           ./hosts/void-desktop-hardware.nix
 
@@ -120,6 +145,7 @@
         specialArgs = { inherit inputs; };
         modules = [
 
+          nodejsTestFixModule
           ./hosts/void-yoga.nix
           ./hosts/void-yoga-hardware.nix
 
@@ -150,6 +176,7 @@
         specialArgs = { inherit inputs; };
         modules = [
 
+          nodejsTestFixModule
           ./hosts/adesso-wsl.nix
 
           ./user/nixos.nix
