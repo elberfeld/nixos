@@ -127,6 +127,7 @@
     inkscape
     jitsi-meet
     libreoffice-qt
+    localsend
     mission-center
     nextcloud-client # better system integration than flatpak
     mpv
