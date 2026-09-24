@@ -86,6 +86,7 @@ in {
     glibcLocalesUtf8
     htop
     iftop
+    isd
     mosh
     mtr
     mosh 
