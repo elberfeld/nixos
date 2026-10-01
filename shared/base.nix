@@ -42,6 +42,23 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Workaround: mosh fails to build against abseil-cpp >= 20260817.0 because
+  # that version of abseil-cpp aliases absl::{weak,strong,partial}_ordering to
+  # the std:: C++20 types (ABSL_OPTION_USE_STD_ORDERING = 1), but mosh's
+  # configure script only requests C++17 (-std=gnu++17). Force mosh to build
+  # in C++20 mode so the std:: comparison types it needs are actually
+  # declared. Remove this override once upstream nixpkgs fixes the mosh
+  # build (e.g. by passing --std=c++20 itself or pinning an older abseil-cpp).
+  nixpkgs.overlays = [
+    (final: prev: {
+      mosh = prev.mosh.overrideAttrs (old: {
+        env = (old.env or { }) // {
+          NIX_CFLAGS_COMPILE = toString (old.env.NIX_CFLAGS_COMPILE or "") + " -std=gnu++20";
+        };
+      });
+    })
+  ];
+
   # Allow running dynamically linked executables (e.g. VSCodium/VSCode extensions like Kilo Code)
   programs.nix-ld.enable = true;
 
