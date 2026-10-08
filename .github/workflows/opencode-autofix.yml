@@ -233,7 +233,7 @@ jobs:
           2. Versuche den Fehler durch Anpassungen an den .nix-Dateien oder an flake.lock
              zu beheben.
           3. Verifiziere jeden Fix, indem du für die betroffenen Hosts
-             `nix build .#nixosConfigurations.<host>.config.system.build.toplevel --accept-flake-config --no-link`
+             `nix build .#nixosConfigurations.<host>.config.system.build.toplevel --no-link`
              ausführst.
           4. Nur wenn der Build für alle Hosts (void-desktop, void-carbonx1, adesso-wsl)
              erfolgreich ist: erstelle einen neuen Branch, committe alle Änderungen

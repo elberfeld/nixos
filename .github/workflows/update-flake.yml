@@ -92,7 +92,6 @@ jobs:
         run: |
           set -o pipefail
           nix build '.#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel' \
-            --accept-flake-config \
             --no-link \
             --print-build-logs 2>&1 | tee build-${{ matrix.host }}.log
 

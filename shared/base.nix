@@ -57,6 +57,17 @@ in {
   # Enable flakes and new nix command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Binary caches (damit Cachix auch ohne --accept-flake-config genutzt wird,
+  # z.B. bei "nh os switch .")
+  nix.settings.extra-substituters = [
+    "https://elberfeld.cachix.org"
+    "https://attic.xuyh0120.win/lantian"
+  ];
+  nix.settings.extra-trusted-public-keys = [
+    "elberfeld.cachix.org-1:bAif3b/rQtfMXF/gK241badNdwPoxJaLESpkSVDgOq8="
+    "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+  ];
+
   # Passwordless sudo for group wheel  
   security.sudo.wheelNeedsPassword = false;
 

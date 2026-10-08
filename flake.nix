@@ -28,17 +28,6 @@
     };
   };
 
-  nixConfig = {
-    extra-substituters = [
-      "https://elberfeld.cachix.org"
-      "https://attic.xuyh0120.win/lantian"
-    ];
-    extra-trusted-public-keys = [
-      "elberfeld.cachix.org-1:bAif3b/rQtfMXF/gK241badNdwPoxJaLESpkSVDgOq8="
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
-    ];
-  };
-
   outputs = { self, nixpkgs, nix-cachyos-kernel, lanzaboote, nixos-wsl, home-manager, ... }@inputs: {
     nixosConfigurations = {
 
