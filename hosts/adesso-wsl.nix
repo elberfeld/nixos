@@ -3,11 +3,7 @@
 {
 
   # CPU: AMD Ryzen 5 AI PRO 350 (Zen 5)
-  nixpkgs.hostPlatform = {
-    system = "x86_64-linux";
-    gcc.arch = "znver5";
-    gcc.tune = "znver5";
-  };
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   wsl.enable = true;
   wsl.defaultUser = "nixos";
