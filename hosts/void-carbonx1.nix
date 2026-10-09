@@ -4,6 +4,13 @@ let
   evolisPrinterDriver = pkgs.callPackage ../thirdparty/evolis-cups-driver.nix {};
 in
 {
+  # CPU: Intel Core 12th Gen (Alder Lake)
+  nixpkgs.hostPlatform = {
+    system = "x86_64-linux";
+    gcc.arch = "alderlake";
+    gcc.tune = "alderlake";
+  };
+
   # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel 
   # x86_64-v4 is for newer CPUs like interl Skylake and newer
   nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];

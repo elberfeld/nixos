@@ -2,7 +2,12 @@
 
 {
 
-
+  # CPU: Intel Core 4th Gen (Haswell)
+  nixpkgs.hostPlatform = {
+    system = "x86_64-linux";
+    gcc.arch = "haswell";
+    gcc.tune = "haswell";
+  };
 
   # Bootloader Settimgs
   boot.loader.efi.canTouchEfiVariables = true;

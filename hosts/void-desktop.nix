@@ -1,6 +1,13 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
+  # CPU: Intel Core 6th Gen (Skylake)
+  nixpkgs.hostPlatform = {
+    system = "x86_64-linux";
+    gcc.arch = "skylake";
+    gcc.tune = "skylake";
+  };
+
   # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel 
   # x86_64-v4 is for newer CPUs like interl Skylake and newer
   nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
