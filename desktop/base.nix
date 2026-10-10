@@ -91,6 +91,20 @@
   environment.sessionVariables = {
     # Hint electron Apps to use wayland
     NIXOS_OZONE_WL = "1";
+
+    # Bitwarden Desktop (and potentially other apps) defaults to protecting
+    # its in-memory encryption key using Linux's memfd_secret() syscall.
+    # The kernel globally and permanently refuses to hibernate for the rest
+    # of the boot as soon as ANY process holds a memfd_secret allocation
+    # (kernel/power/hibernate.c: hibernation_available() -> secretmem_active()),
+    # since that memory must never be written to the hibernation image/swap.
+    # This causes hibernate to work from the login manager (before Bitwarden
+    # autostarts) but fail everywhere afterwards ("Sleep verb 'hibernate' is
+    # not configured or configuration is not supported by kernel").
+    # Force Bitwarden to use the kernel keyring (keyctl) instead, which
+    # provides the same protection without blocking hibernation.
+    # See https://github.com/bitwarden/clients/blob/main/apps/desktop/desktop_native/secure_memory/src/secure_key/mod.rs
+    SECURE_KEY_CONTAINER_BACKEND = "keyctl";
   };
 
   # Fix Filepickers for Firefox
