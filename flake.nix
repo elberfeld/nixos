@@ -53,6 +53,7 @@
           ./shared/powermgmt.nix
           ./shared/physicalmachine.nix
           ./shared/virtualbox.nix
+          ./shared/nixpkgs-update-fixes.nix
 
           ./desktop/base.nix
           ./desktop/devtools.nix
@@ -88,6 +89,7 @@
 
           ./shared/base.nix
           ./shared/physicalmachine.nix
+          ./shared/nixpkgs-update-fixes.nix
 
           ./desktop/base.nix
           ./desktop/gaming.nix
