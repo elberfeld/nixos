@@ -42,6 +42,32 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.overlays = [
+    # Workaround for a nixpkgs regression: with `__structuredAttrs` enabled,
+    # Python packages now pass `makeWrapperArgs` as a bash array, but hplip's
+    # `preFixup` still expands `$makeWrapperArgs`, so only the first element
+    # ("--prefix") is used and the following gio module path becomes an unknown
+    # argument for makeWrapper. Disable structured attributes for hplip until
+    # upstream fixes it. See https://github.com/NixOS/nixpkgs/issues/575306
+    (final: prev: {
+      hplip = prev.hplip.overrideAttrs (_: {
+        __structuredAttrs = false;
+      });
+    })
+
+    # Workaround for the kernel module aggregation failing on the CachyOS
+    # kernel. The CachyOS flake pins its own (older) nixpkgs, so its kernel
+    # modules output has no `modules.cer`, but the current nixpkgs
+    # `aggregateModules` unconditionally requires it.
+    (final: prev: {
+      aggregateModules = modules:
+        final.callPackage ../nixpkgs/aggregate-modules.nix {
+          inherit (final.buildPackages) kmod;
+          inherit modules;
+        };
+    })
+  ];
+
   # Allow running dynamically linked executables (e.g. VSCodium/VSCode extensions like Kilo Code)
   programs.nix-ld.enable = true;
 
