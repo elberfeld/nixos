@@ -61,11 +61,11 @@ in {
   # z.B. bei "nh os switch .")
   nix.settings.extra-substituters = [
     "https://elberfeld.cachix.org"
-    "https://attic.xuyh0120.win/lantian"
+    "https://cache.lantian.pub/lantian"
   ];
   nix.settings.extra-trusted-public-keys = [
     "elberfeld.cachix.org-1:bAif3b/rQtfMXF/gK241badNdwPoxJaLESpkSVDgOq8="
-    "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+    "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
   ];
 
   # Passwordless sudo for group wheel  

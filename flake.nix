@@ -1,6 +1,15 @@
 {
   description = "Chris's NixOS Configuration Flake";
 
+  # CachyOS-Kernel-Binary-Cache. Der alte Endpunkt
+  # (https://attic.xuyh0120.win/lantian) ist nach einem Server-Kompromiss
+  # abgeschaltet; ohne erreichbaren Cache wird der Kernel aus dem Quellcode
+  # gebaut und sprengt den Speicherplatz des CI-Runners.
+  nixConfig = {
+    extra-substituters = [ "https://cache.lantian.pub/lantian" ];
+    extra-trusted-public-keys = [ "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
