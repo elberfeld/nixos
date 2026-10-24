@@ -7,10 +7,9 @@
   environment.systemPackages = with pkgs; [
 
     claude-code
-    # inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop-with-fhs # Disabled: upstream flake uses unmaintained nodePackages
+    inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop-fhs
     drawio
     git
-    #kilocode-cli
     opencode
     opencode-desktop
     python3
