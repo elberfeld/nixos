@@ -7,7 +7,6 @@
   nixpkgs.overlays = [ inputs.mac-style-plymouth.overlays.default ];
 
   # Graphical boot screen 
-  boot.initrd.systemd.enable = true;
   boot.initrd.verbose = false;
   boot.consoleLogLevel = 0; 
 
