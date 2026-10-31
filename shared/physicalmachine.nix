@@ -4,7 +4,15 @@
 
   # Always use most recent kernel by default; hosts can override
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
-  
+
+  # No software RAID in use. Hosts with system.stateVersion < 23.11 would
+  # otherwise enable mdadm implicitly (initrd and system).
+  boot.swraid.enable = false;
+
+  # Compressed swap in RAM, used before the disk swap partition (priority 5).
+  # The disk swap stays in place for hibernation and as overflow.
+  zramSwap.enable = true;
+
   # Enable networking with NetworkManager
   networking.networkmanager.enable = true;
 

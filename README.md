@@ -21,12 +21,12 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 # For physical machines, copy the hardware configuration:
 sudo cp /etc/nixos/hardware-configuration.nix hosts/<hostname>-hardware.nix
 
-# Then uncomment the import line in hosts/<hostname>.nix
+# Then add it to the host's module list in flake.nix
 ```
 
 4. Build and switch to your configuration:
 ```bash
-# Replace <hostname> with one of: void-carbonx1, void-yoga, adesso-wsl
+# Replace <hostname> with one of: void-carbonx1, void-desktop, void-yoga, adesso-wsl
 sudo nixos-rebuild switch --flake .#<hostname>
 ```
 
@@ -39,6 +39,7 @@ git remote set-url --push origin git@github.com:elberfeld/nixos.git
 ## Available Configurations
 
 - **void-carbonx1**: ThinkPad X1 Carbon Gen 10 Laptop
+- **void-desktop**: Desktop PC (Intel Skylake, GeForce GTX 1650)
 - **void-yoga**: ThinkPad Yoga Laptop   
 - **adesso-wsl**: WSL2 on Windows 11
 
@@ -48,7 +49,9 @@ git remote set-url --push origin git@github.com:elberfeld/nixos.git
 ├── flake.nix              # Main flake configuration
 ├── hosts/                 # Host-specific configurations
 ├── desktop/               # Desktop environment modules
+├── hardware/              # Hardware-specific modules (camera, GPU, TPM)
 ├── shared/                # Shared system modules
+├── thirdparty/            # Vendor drivers packaged locally
 └── user/                  # User configurations
 ```
 
@@ -86,11 +89,15 @@ nix build .#nixosConfigurations.<hostname>.config.system.build.toplevel --dry-ru
 
 ## Clone with SSH Key from Yubikey 
 
-The following extensions in your host configuration enable Yubikey support:
+Yubikey support for SSH keys (via gpg-agent) is already included in `shared/physicalmachine.nix`:
 
 ```nix
-# Already included in shared/yubikey.nix
-services.yubikey-agent.enable = true;
+services.udev.packages = [ pkgs.yubikey-personalization ];
+
+programs.gnupg.agent = {
+  enable = true;
+  enableSSHSupport = true;
+};
 ```
 
 ## WSL Usage

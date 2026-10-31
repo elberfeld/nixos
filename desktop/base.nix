@@ -76,7 +76,6 @@
 
   # Enable flatpak
   services.flatpak.enable = true;
-  services.packagekit.enable = true;
 
   # Enable XDG Portal
   xdg.portal.enable = true;
@@ -132,6 +131,10 @@
   nixpkgs.config.allowInsecurePredicate =
     pkg: (pkg.pname or "") == "electron" && lib.hasPrefix "41." (pkg.version or "");
 
+  # Default flake for nh, so "nh os switch" works from any directory
+  # (same path as repo_dir in the nixos-updater config)
+  programs.nh.flake = "/home/chris/Projekte/nixos";
+
   # NixOS Updater (Tray-Tool) beim Start der Desktop-Sitzung automatisch starten
   # https://github.com/elberfeld/nixos-updater
   environment.etc."xdg/autostart/nixos-updater.desktop".text = ''
@@ -178,5 +181,38 @@
     zettlr
 
   ];
-  
+
+  # Install Fonts Fonts
+  fonts.fontDir.enable = true;
+  fonts.packages = with pkgs; [
+
+    cooper-hewitt
+    corefonts
+    fira
+    fira-code
+    fira-code-symbols
+    hack-font
+    ibm-plex
+    iosevka
+    jetbrains-mono
+    liberation_ttf
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.code-new-roman
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.monaspace
+    nerd-fonts.ubuntu
+    nerd-fonts.ubuntu-mono
+    nerd-fonts.ubuntu-sans
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    powerline-fonts
+    proggyfonts
+    spleen
+    vista-fonts
+  ];
+
 }

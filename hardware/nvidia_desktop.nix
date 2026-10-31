@@ -33,7 +33,9 @@
     # supported GPUs is at: 
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
     # Only available from driver 515.43.04+
-    open = false;
+    # The GTX 1650 is Turing, for which NVIDIA recommends the open modules.
+    # With driver 595+ this also enables the kernel suspend notifiers.
+    open = true;
 
     # Enable the Nvidia settings menu,
 	# accessible via `nvidia-settings`.

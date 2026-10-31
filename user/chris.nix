@@ -22,7 +22,6 @@
       "wheel"
 
       # user can control virtual machines
-      "libvirtd"
       "vboxusers"
 
       # user can use docker

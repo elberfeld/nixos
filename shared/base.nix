@@ -97,40 +97,7 @@ in {
     wget
   ];
 
-  # Install Fonts Fonts
-  fonts.fontDir.enable = true;
-  fonts.packages = with pkgs; [
-
-    cooper-hewitt
-    corefonts    
-    fira
-    fira-code
-    fira-code-symbols
-    hack-font    
-    ibm-plex
-    iosevka
-    jetbrains-mono
-    liberation_ttf
-    nerd-fonts.caskaydia-cove
-    nerd-fonts.caskaydia-mono
-    nerd-fonts.code-new-roman
-    nerd-fonts.fira-code
-    nerd-fonts.fira-mono
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.monaspace
-    nerd-fonts.ubuntu
-    nerd-fonts.ubuntu-mono
-    nerd-fonts.ubuntu-sans
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    powerline-fonts
-    proggyfonts
-    spleen
-    vista-fonts
-  ];
-
-  # Garbage collection 
+  # Garbage collection
   nix.settings.auto-optimise-store = true;
 
   # Warpzone internal CA

@@ -13,17 +13,10 @@
     # Set default shell 
     # shell = pkgs.nushell;
     
-    extraGroups = [ 
+    extraGroups = [
 
-      # user can set network options 
-      "networkmanager"
-      
-      # user can use sudo 
+      # user can use sudo
       "wheel"
-
-      # user can control virtual machines
-      "libvirtd"
-      "vboxusers"
 
       # user can use docker
       "docker"
