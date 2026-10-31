@@ -13,7 +13,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # Pure Nix flake utility functions.
+    # Pure Nix flake utility functions (shared with other inputs via follows).
     flake-utils.url = "github:numtide/flake-utils";
 
     # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel
@@ -32,6 +32,7 @@
     mac-style-plymouth = {
       url = "github:SergioRibera/s4rchiso-plymouth-theme";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     claude-desktop = {
@@ -69,6 +70,7 @@
           ./hardware/tpm2-unlock.nix
 
           ./shared/base.nix
+          ./shared/cachyos-kernel.nix
           ./shared/docker.nix
           ./shared/heidisql.nix
           ./shared/lanzaboote.nix
@@ -109,6 +111,7 @@
           ./hardware/nvidia_desktop.nix
 
           ./shared/base.nix
+          ./shared/cachyos-kernel.nix
           ./shared/physicalmachine.nix
 
           ./desktop/base.nix

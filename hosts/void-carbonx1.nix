@@ -7,11 +7,6 @@ in
   # CPU: Intel Core 12th Gen (Alder Lake)
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel 
-  # x86_64-v4 is for newer CPUs like interl Skylake and newer
-  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v4;
-
   # Bootloader Settings
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -25,8 +20,8 @@ in
   # Define your hostname
   networking.hostName = "void-carbonx1"; 
 
-  # Allow UDP port for AusweisApp
-  networking.firewall.allowedUDPPorts = [ 24727 ];
+  # Allow UDP port for AusweisApp (smartphone as card reader)
+  programs.ausweisapp.openFirewall = true;
   
   # Lenovo Device Info: https://psref.lenovo.com/Detail/ThinkPad_X1_Carbon_Gen_10?M=21CB00AEMB
   # Arch Wiki with Hardware Infos: https://wiki.archlinux.org/title/Lenovo_ThinkPad_X1_Carbon_(Gen_10)
@@ -48,7 +43,11 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.11"; # Did you read the comment?
+  # Home-Manager state version, should stay at the version of the first
+  # Home-Manager activation on this host.
+  home-manager.users.chris.home.stateVersion = "23.11";
+
+  system.stateVersion = "23.05"; # Did you read the comment?
 
   # Additional Entries for /etc/hosts
   #networking.extraHosts =

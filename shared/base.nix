@@ -3,7 +3,6 @@
 let
   GERMAN = "de_DE.UTF-8";
   GERMAN_UTF8 = "de_DE.UTF-8/UTF-8";
-  ENGLISH = "en_US.UTF-8";
   ENGLISH_UTF8 = "en_US.UTF-8/UTF-8";
 in {
 
@@ -16,25 +15,9 @@ in {
 
   # Select internationalisation properties.
   i18n.supportedLocales = [ ENGLISH_UTF8 GERMAN_UTF8 ];
+  # Setzt LANG; alle LC_*-Kategorien fallen darauf zurück.
+  # Kein LC_ALL setzen, das würde Overrides pro Benutzer/Programm verhindern.
   i18n.defaultLocale = GERMAN;
-  i18n.extraLocaleSettings = {
-
-    LANG = GERMAN;
-    LC_ALL = GERMAN;
-    LC_IDENTIFICATION = GERMAN;
-    LC_MESSAGES = GERMAN;
-
-    LC_ADDRESS = GERMAN;
-    LC_CTYPE = GERMAN;
-    LC_COLLATE = GERMAN;
-    LC_MEASUREMENT = GERMAN;
-    LC_MONETARY = GERMAN;
-    LC_NAME = GERMAN;
-    LC_NUMERIC = GERMAN;
-    LC_PAPER = GERMAN;
-    LC_TELEPHONE = GERMAN;
-    LC_TIME = GERMAN;
-  };
 
   # Configure console keymap
   console.keyMap = "de";
@@ -100,7 +83,6 @@ in {
     isd
     mosh
     mtr
-    mosh 
     nano
     neovim
     nmap
@@ -151,11 +133,15 @@ in {
   # Automatic upgrades 
   # https://nixos.wiki/wiki/Automatic_system_upgrades
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/tasks/auto-upgrade.nix
+  # Ohne "flake" nutzt der Dienst Channels und <nixos-config> und schlägt fehl.
+  # Der Host wird anhand von networking.hostName ausgewählt.
   system.autoUpgrade = {
 
     enable = true;
+    flake = "github:elberfeld/nixos";
     operation = "boot";
-    dates = "hourly";
+    dates = "daily";
+    randomizedDelaySec = "45min";
     allowReboot = false;
   };
 

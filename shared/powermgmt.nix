@@ -8,7 +8,9 @@
 
   # Enable Power Management 
   powerManagement.enable = true;
-  powerManagement.powertop.enable = true;
+  # powertop auto-tune is disabled on purpose: it re-enables USB autosuspend,
+  # which conflicts with usbcore.autosuspend=-1 in desktop/base.nix (input lag).
+  powerManagement.powertop.enable = false;
   
   # Enable Thermald to prevent overheat on inter CPUs
   services.thermald.enable = true;

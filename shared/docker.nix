@@ -5,6 +5,8 @@
   # enable docker
   virtualisation.docker = {
     enable = true;
+    # Weekly cleanup of unused images, containers and networks
+    autoPrune.enable = true;
     # Set up resource limits
     daemon.settings = {
       experimental = true;

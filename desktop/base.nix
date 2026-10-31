@@ -87,6 +87,15 @@
   # Enable dconf
   programs.dconf.enable = true;
 
+  # AusweisApp (firewall port for smartphone as card reader is opened per host)
+  programs.ausweisapp.enable = true;
+
+  # Wireshark with capture permissions for members of group "wireshark"
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
+
   # set environment variables 
   environment.sessionVariables = {
     # Hint electron Apps to use wayland
@@ -139,13 +148,11 @@
   environment.systemPackages = with pkgs; [
 
     appimage-run
-    ausweisapp
     beeper # not available as flatpak
     bitwarden-desktop
     chromium
     element-desktop
     firefox
-    flatpak
     gparted
     hunspell
     hunspellDicts.de_DE
@@ -161,7 +168,6 @@
     thunderbird
     vlc
     vscode # git does not work properly as flatpak
-    wireshark
     yubioath-flutter # not available as flatpak
     yt-dlp
     yt-dlg
