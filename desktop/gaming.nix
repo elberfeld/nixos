@@ -14,13 +14,12 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # vscode: to enable sudo commands in vscode terminal, run: code --no-sandbox
+  # steam and protontricks are installed by programs.steam above; listing
+  # them here again would shadow the configured package.
   environment.systemPackages = with pkgs; [
 
-    steam
     protonplus
     protonup-qt
-    protontricks
     winetricks
 
   ];

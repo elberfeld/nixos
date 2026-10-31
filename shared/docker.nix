@@ -12,8 +12,9 @@
       experimental = true;
       default-address-pools = [
         {
-          # default subnet 172.18.0.0/16 collides with Deutsche Bahn Wifi networks
-          base = "172.36.0.0/16"; 
+          # default subnet 172.18.0.0/16 collides with Deutsche Bahn Wifi networks.
+          # Must stay within the private range 172.16.0.0/12 (172.16 - 172.31).
+          base = "172.30.0.0/16";
           size = 24;
         }
       ];

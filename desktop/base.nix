@@ -126,9 +126,11 @@
   #  };
   #};
 
-  # Allow insecure marked jitsi-meet package
+  # jitsi-meet-electron is pinned to electron_41, which is marked insecure (EOL).
+  # Match the whole 41.x series so patch updates don't break evaluation.
+  # Remove once jitsi-meet-electron uses a supported Electron version.
   nixpkgs.config.allowInsecurePredicate =
-    pkg: (pkg.pname or "") == "jitsi-meet" && lib.hasPrefix "1.0." (pkg.version or "");
+    pkg: (pkg.pname or "") == "electron" && lib.hasPrefix "41." (pkg.version or "");
 
   # NixOS Updater (Tray-Tool) beim Start der Desktop-Sitzung automatisch starten
   # https://github.com/elberfeld/nixos-updater
@@ -158,7 +160,7 @@
     hunspellDicts.de_DE
     hunspellDicts.en_US
     inkscape
-    jitsi-meet
+    jitsi-meet-electron
     libreoffice-qt
     localsend
     inputs.nixos-updater.packages.${pkgs.stdenv.hostPlatform.system}.default

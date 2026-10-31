@@ -18,6 +18,8 @@
   boot.initrd.luks.devices."luks-2df387cd-4f37-4156-8366-21a2851e441c" = 
   {
     device = "/dev/disk/by-uuid/2df387cd-4f37-4156-8366-21a2851e441c";
+    # Allow discards for SSD TRIM support (weekly fstrim)
+    allowDiscards = true;
   };
 
   # Swap partition LUKS - must be unlocked before hibernation resume
