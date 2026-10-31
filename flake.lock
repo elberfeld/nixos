@@ -241,6 +241,26 @@
         "type": "github"
       }
     },
+    "nixos-updater": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793470752,
+        "narHash": "sha256-DI34UnaEeJj3ophQwFP/ih0lBbXRCvCWHAg+pBP3Muk=",
+        "owner": "elberfeld",
+        "repo": "nixos-updater",
+        "rev": "b9255cb905165f26a70518a484890002087eec5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elberfeld",
+        "repo": "nixos-updater",
+        "type": "github"
+      }
+    },
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -354,6 +374,7 @@
         "lanzaboote": "lanzaboote",
         "mac-style-plymouth": "mac-style-plymouth",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
+        "nixos-updater": "nixos-updater",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2"
       }

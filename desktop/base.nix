@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
 
@@ -121,6 +121,18 @@
   nixpkgs.config.allowInsecurePredicate =
     pkg: (pkg.pname or "") == "jitsi-meet" && lib.hasPrefix "1.0." (pkg.version or "");
 
+  # NixOS Updater (Tray-Tool) beim Start der Desktop-Sitzung automatisch starten
+  # https://github.com/elberfeld/nixos-updater
+  environment.etc."xdg/autostart/nixos-updater.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=NixOS Updater
+    Comment=Neue Commits der NixOS-Konfiguration anzeigen und System aktualisieren
+    Exec=nixos-updater
+    Icon=system-software-update
+    X-GNOME-Autostart-enabled=true
+  '';
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # vscode: to enable sudo commands in vscode terminal, run: code --no-sandbox
@@ -142,6 +154,7 @@
     jitsi-meet
     libreoffice-qt
     localsend
+    inputs.nixos-updater.packages.${pkgs.stdenv.hostPlatform.system}.default
     mission-center
     nextcloud-client # better system integration than flatpak
     mpv
