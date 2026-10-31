@@ -130,21 +130,6 @@ in {
     vista-fonts
   ];
 
-  # Automatic upgrades 
-  # https://nixos.wiki/wiki/Automatic_system_upgrades
-  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/tasks/auto-upgrade.nix
-  # Ohne "flake" nutzt der Dienst Channels und <nixos-config> und schlägt fehl.
-  # Der Host wird anhand von networking.hostName ausgewählt.
-  system.autoUpgrade = {
-
-    enable = true;
-    flake = "github:elberfeld/nixos";
-    operation = "boot";
-    dates = "daily";
-    randomizedDelaySec = "45min";
-    allowReboot = false;
-  };
-
   # Garbage collection 
   nix.settings.auto-optimise-store = true;
 
