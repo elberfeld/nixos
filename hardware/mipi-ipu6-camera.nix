@@ -79,4 +79,27 @@
   # actually released (e.g. stop wireplumber or anything with an open
   # /dev/video* fd) before attempting to unload the driver.
 
+  # Post-resume fprintd reset: after hibernate the fingerprint reader gets
+  # reset by the kernel, but fprintd keeps a stale USB handle and hangs.
+  # SIGKILL it; it is D-Bus activated and restarts on next use.
+  # Deliberately NOT powerManagement.resumeCommands: that runs as ExecStop of
+  # sleep-actions.service with a ~10s timeout, and a plain restart of the
+  # hung fprintd blocks past it.
+  #
+  # Camera: reloading intel_ipu6/_isys/_psys/ov2740 after resume (with
+  # wireplumber stopped) was tried and does NOT work: after modprobe -r the
+  # intel_ipu6 IRQ handler (ipu6_buttress_isr) still fires and oopses the
+  # kernel, and the sensor never re-binds ("No sensor found for /dev/media0").
+  # The camera after hibernate is still unsolved; do not re-add module reloads.
+  systemd.services.post-resume-fprintd-reset = {
+    description = "Kill stale fprintd after resume";
+    wantedBy = [ "post-resume.target" "hibernate.target" "suspend.target" "hybrid-sleep.target" "suspend-then-hibernate.target" ];
+    after = [ "post-resume.target" "systemd-hibernate.service" "systemd-suspend.service" "systemd-hybrid-sleep.service" "systemd-suspend-then-hibernate.service" ];
+    serviceConfig.Type = "oneshot";
+    path = [ config.systemd.package ];
+    script = ''
+      systemctl kill --signal=SIGKILL fprintd.service || true
+      systemctl reset-failed fprintd.service || true
+    '';
+  };
 }
