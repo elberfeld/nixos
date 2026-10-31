@@ -13,9 +13,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # Pure Nix flake utility functions (shared with other inputs via follows).
-    flake-utils.url = "github:numtide/flake-utils";
-
     # CachyOS Kernel from https://github.com/xddxdd/nix-cachyos-kernel
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
@@ -27,12 +24,6 @@
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    mac-style-plymouth = {
-      url = "github:SergioRibera/s4rchiso-plymouth-theme";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
 
     claude-desktop = {
@@ -86,7 +77,6 @@
           ./desktop/kde.nix
           #./desktop/lydm.nix
           ./desktop/plasma-login-manager.nix
-          #./desktop/plymouth.nix
           #./desktop/sddm.nix
 
           home-manager.nixosModules.home-manager
@@ -117,7 +107,6 @@
           ./desktop/base.nix
           ./desktop/gaming.nix
           ./desktop/kde.nix
-          #./desktop/plymouth.nix
           ./desktop/sddm.nix
 
           home-manager.nixosModules.home-manager

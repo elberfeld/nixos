@@ -49,8 +49,7 @@ git remote set-url --push origin git@github.com:elberfeld/nixos.git
 ├── hosts/                 # Host-specific configurations
 ├── desktop/               # Desktop environment modules
 ├── shared/                # Shared system modules
-├── user/                  # User configurations
-└── nixpkgs/              # Custom packages
+└── user/                  # User configurations
 ```
 
 ## Usage Commands
