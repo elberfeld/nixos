@@ -22,6 +22,18 @@
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ ipu6-drivers ];
 
+  # TEMPORARY TEST: hibernate hangs while writing the image (journal ends at
+  # "hibernation entry", next boot "PM: Image not found"). The IPU6 stack is
+  # the prime suspect (CSI2 errors after every resume, ipu6_buttress_isr oops).
+  # With the camera modules blacklisted, check whether hibernate becomes
+  # reliable; if so, the camera is the cause. Remove this to get the camera back.
+  boot.blacklistedKernelModules = [
+    "intel_ipu6"
+    "intel_ipu6_isys"
+    "intel_ipu6_psys"
+    "ov2740"
+  ];
+
   environment.systemPackages = with pkgs; [
     libcamera
   ];
