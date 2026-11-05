@@ -240,8 +240,11 @@ jobs:
              (inklusive flake.lock) und öffne mit `gh pr create` einen Pull Request.
              Git-Identität und GH_TOKEN sind bereits gesetzt. Der PR-Titel MUSS mit
              "${{ env.AUTOFIX_PR_PREFIX }}: " beginnen, gefolgt von einer kurzen Beschreibung des
-             gefundenen Problems und des Fixes. Committe ausschliesslich Dateien, die
-             zum Fix gehören - insbesondere nicht das Verzeichnis build-logs/.
+             gefundenen Problems und des Fixes. Die Commit-Message soll in der ersten
+             Zeile ebenfalls kompakt zusammenfassen, was behoben wurde (z. B. "Fix <Ursache>
+             in <Host/Datei>"); bei Bedarf kann eine Leerzeile und 1-2 Sätze Begründung
+             folgen. Committe ausschliesslich Dateien, die zum Fix gehören - insbesondere
+             nicht das Verzeichnis build-logs/.
           5. Findest du keinen erfolgreichen Fix, nimm keine Änderungen am Repository vor
              und beschreibe stattdessen im Log, was du versucht hast und woran es
              gescheitert ist.

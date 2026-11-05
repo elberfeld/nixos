@@ -30,6 +30,10 @@ jobs:
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
 
       # Bei Pull Requests wird flake.lock nicht angefasst, nur der bestehende Stand gebaut.
+      - name: Altes flake.lock sichern
+        if: github.event_name != 'pull_request'
+        run: cp flake.lock flake.lock.orig
+
       - name: Update flake.lock
         if: github.event_name != 'pull_request'
         run: nix flake update
@@ -45,12 +49,22 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: flake.lock als Artifact speichern
+      # Fasst die geänderten Inputs (z. B. "nixpkgs: abc1234 → def5678")
+      # zusammen und nutzt das Ergebnis später als Commit-Message.
+      - name: Zusammenfassung der Änderungen erzeugen
+        if: steps.check.outputs.changed == 'true' && github.event_name != 'pull_request'
+        run: |
+          .github/scripts/flake-lock-summary.sh flake.lock.orig flake.lock | tee flake-update-summary.txt
+
+      - name: flake.lock und Zusammenfassung als Artifact speichern
         if: steps.check.outputs.changed == 'true'
         uses: actions/upload-artifact@v7
         with:
           name: flake-lock
-          path: flake.lock
+          path: |
+            flake.lock
+            flake-update-summary.txt
+          if-no-files-found: ignore
 
   build:
     needs: update
@@ -126,6 +140,9 @@ jobs:
           git add flake.lock
           if git diff --staged --quiet; then
             echo "flake.lock unverändert – kein Commit nötig"
+          elif [ -s flake-update-summary.txt ]; then
+            git commit -F flake-update-summary.txt
+            git push
           else
             git commit -m "Update flake.lock by GitHub Actions"
             git push
